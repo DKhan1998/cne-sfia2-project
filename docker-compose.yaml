@@ -15,9 +15,9 @@ services:
       - target: 5001
         published: 5001
   mysql:
-    container_name: db
-    image: cne-sfia2-project-db:latest
-    build: ./db
+    container_name: database
+    image: cne-sfia2-project-database:latest
+    build: ./database
     environment:
       - MYSQL_ROOT_PASSWORD=${SECRET_KEY}
       - MYSQL_DATABASE=${DATABASE_URI}
@@ -28,7 +28,7 @@ services:
         published: 80
     volumes:
       - type: bind
-        source: ./nginx/nginx.conf
+        source: nginx.conf
         target: /etc/nginx/nginx.conf
     depends_on:
       - frontends
