@@ -1,0 +1,29 @@
+version: '3.8'
+services:
+  frontend:
+    image: flask-app
+    build: ./frontend
+    depends_on:
+      - backend
+  backend:
+    image: flask-app
+    build: ./backend
+    depends_on:
+      - mysql
+  mysql:
+    image: flask-db
+    build: ./database
+    environment:
+      - MYSQL_ROOT_PASSWORD=${SECRET_KEY}
+      - MYSQL_DATABASE=${DATABASE_URI}
+  nginx:
+    image: nginx
+    ports:
+      - target: 80
+        published: 80
+    volumes:
+      - type: bind
+        source: ./nginx/nginx.conf
+        target: /etc/nginx/nginx.conf
+    depends_on:
+      - frontend
