@@ -1,5 +1,7 @@
 # QAC SFIA2 Project
 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/0c689785321d4944a43a8344b425dc65)](https://app.codacy.com/manual/DKhan1998/cne-sfia2-project?utm_source=github.com&utm_medium=referral&utm_content=DKhan1998/cne-sfia2-project&utm_campaign=Badge_Grade_Settings)
+
 This application is a simple [Flask application](https://flask.palletsprojects.com/en/1.1.x/quickstart/#a-minimal-application), ready to be deployed, for your SFIA2 project.
 
 The following information should be everything you need to complete the project.
