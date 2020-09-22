@@ -14,6 +14,19 @@ pipeline{
                     }
                 }
             }
+            stage('Test') {
+                steps {
+                    script{
+                        if (env.rollback == 'false'){
+                            withPythonEnv('python3') {
+                                sh 'pip install pytest'
+                                sh 'pytest test_frontend.py'
+                                sh 'pytest test_backend.py'
+                            }
+                        }
+                    }
+                }
+            }
             stage('Tag & Push Image'){
                 steps{
                     script{
