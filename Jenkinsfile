@@ -14,22 +14,22 @@ pipeline{
                     }
                 }
             }
-            stage('Test') {
-                steps {
-                    script{
-                        if (env.rollback == 'false'){
-                            withPythonEnv('python') {
-                                sh 'pip install pytest'
-                                sh 'pytest test_frontend.py'
-                                sh 'pytest test_backend.py'
-                            }
-                        }
-                    }
-                }
+//             stage('Test') {
+//                 steps {
+//                     script{
+//                         if (env.rollback == 'false'){
+//                             withPythonEnv('python') {
+//                                 sh 'pip install pytest'
+//                                 sh 'pytest test_frontend.py'
+//                                 sh 'pytest test_backend.py'
+//                             }
+//                         }
+//                     }
+//                 }
 //                 post {
 //                    always {junit 'test-reports/*.xml'}
 //                 }
-            }
+//             }
             stage('Tag & Push Image'){
                 steps{
                     script{
