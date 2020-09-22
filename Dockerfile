@@ -1,9 +1,9 @@
-FROM python:3.8
+FROM python:3.8 as build
 WORKDIR ./
 COPY . .
 RUN pip install Flask
 EXPOSE 5000
-ENTRYPOINT ["python", "app.py"]
+ENTRYPOINT ["python3", "app.py"]
 FROM nginx:latest
 WORKDIR /app
 COPY --from=build /build/dist .
