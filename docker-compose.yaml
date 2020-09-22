@@ -1,12 +1,22 @@
 version: '3.8'
 services:
-  flask-app:
-    image: flask-app
-    build: ./flask-app
-    depends_on:
-      - mysql
+  frontend:
+    container_name: frontend
+    build: ./frontend
+    image: cne-sfia2-project-frontend:latest
+    ports:
+      - target: 5000
+        published: 5000
+  backend:
+    container_name: backend
+    build: ./backend
+    image: cne-sfia2-project-backend:latest
+    ports:
+      - target: 5001
+        published: 5001
   mysql:
-    image: flask-db
+    container_name: db
+    image: cne-sfia2-project-db:latest
     build: ./db
     environment:
       - MYSQL_ROOT_PASSWORD=${SECRET_KEY}
@@ -21,4 +31,4 @@ services:
         source: ./nginx/nginx.conf
         target: /etc/nginx/nginx.conf
     depends_on:
-      - flask-app
+      - frontends
