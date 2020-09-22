@@ -9,7 +9,7 @@ pipeline{
                 steps{
                     script{
                         if (env.rollback == 'false'){
-                            image = docker.build("dkhan20/cne-sfia2-project-frontend")
+                            image = docker.build("dkhan20/cne-sfia2-project")
                         }
                     }
                 }
