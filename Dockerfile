@@ -1,5 +1,5 @@
 FROM python:3.8 as build
-WORKDIR ./
+WORKDIR /app
 COPY . .
 RUN pip install Flask && pip install -U pytest
 EXPOSE 5000
