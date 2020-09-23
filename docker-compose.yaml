@@ -19,7 +19,6 @@ services:
       - target: 5001
         published: 5001
     environment:
-      - DB_PASSWORD=${DB_PASSWORD}
       - SECRET_KEY=${SECRET_KEY}
     volumes:
       - ./backend:/backend
@@ -30,7 +29,7 @@ services:
     image: cne-sfia2-project-database:latest
     build: ./database
     environment:
-      - MYSQL_ROOT_PASSWORD=${DB_PASSWORD}
+      - MYSQL_ROOT_PASSWORD=${SECRET_KEY}
       - MYSQL_DATABASE=${DATABASE_URI}
     volumes:
       - ./database:/database
