@@ -9,7 +9,8 @@ services:
         published: 5000
     volumes:
       - ./frontend:/frontend
-
+    depends_on:
+      - backend
   backend:
     container_name: backend
     build: ./backend
@@ -22,7 +23,7 @@ services:
     volumes:
       - ./backend:/backend
     depends_on:
-      - frontend
+      - database
   database:
     container_name: database
     image: cne-sfia2-project-database:latest
@@ -33,7 +34,7 @@ services:
     volumes:
       - ./database:/database
     depends_on:
-      - backend
+      - nginx
   nginx:
     build: nginx.conf
     ports:
