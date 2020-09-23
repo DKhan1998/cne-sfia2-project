@@ -8,7 +8,7 @@ services:
       - target: 5000
         published: 5000
     volumes:
-      - ./frontend:/frontend
+      - ./frontend:/var/frontend
     depends_on:
       - backend
   backend:
@@ -21,7 +21,7 @@ services:
     environment:
       - SECRET_KEY=${SECRET_KEY}
     volumes:
-      - ./backend:/backend
+      - ./backend:/backend-data
     depends_on:
       - database
   database:
@@ -36,7 +36,7 @@ services:
     depends_on:
       - backend
   nginx:
-    image: library/nginx:latest
+    build: nginx.conf
     ports:
       - target: 80
         published: 80
@@ -46,3 +46,10 @@ services:
         target: /etc/nginx/nginx.conf
     depends_on:
       - frontend
+    networks:
+      default:
+        - aliases:
+            - ${HOSTNAME}
+
+  networks:
+    default:
