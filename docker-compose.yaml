@@ -3,24 +3,37 @@ services:
   frontend:
     container_name: frontend
     build: ./frontend
+    dockerfile: Dockerfile
     image: cne-sfia2-project-frontend:latest
     ports:
       - target: 5000
         published: 5000
+    volumes:
+      - ./frontend:/frontend
   backend:
     container_name: backend
     build: ./backend
+    dockerfile: Dockerfile
     image: cne-sfia2-project-backend:latest
     ports:
       - target: 5001
         published: 5001
+    volumes:
+      - ./backend:/backend
+    depends_on:
+      - frontend
   mysql:
     container_name: database
     image: cne-sfia2-project-database:latest
+    dockerfile: Dockerfile
     build: ./database
     environment:
       - MYSQL_ROOT_PASSWORD=${SECRET_KEY}
       - MYSQL_DATABASE=${DATABASE_URI}
+    volumes:
+      - ./database:/database
+    depends_on:
+      - backend
   nginx:
     image: nginx
     ports:
