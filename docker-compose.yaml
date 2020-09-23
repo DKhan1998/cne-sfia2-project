@@ -3,7 +3,6 @@ services:
   frontend:
     container_name: frontend
     build: ./frontend
-    dockerfile: Dockerfile
     image: cne-sfia2-project-frontend:latest
     ports:
       - target: 5000
@@ -13,7 +12,6 @@ services:
   backend:
     container_name: backend
     build: ./backend
-    dockerfile: Dockerfile
     image: cne-sfia2-project-backend:latest
     ports:
       - target: 5001
@@ -25,7 +23,6 @@ services:
   mysql:
     container_name: database
     image: cne-sfia2-project-database:latest
-    dockerfile: Dockerfile
     build: ./database
     environment:
       - MYSQL_ROOT_PASSWORD=${SECRET_KEY}
