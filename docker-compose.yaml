@@ -23,15 +23,16 @@ services:
     environment:
       - MYSQL_ROOT_PASSWORD=${SECRET_KEY}
       - MYSQL_DATABASE=${DATABASE_URI}
+
   nginx:
-    build: ./nginx
+    build: nginx
     image: nginx:latest
     ports:
       - target: 80
         published: 80
     volumes:
       - type: bind
-        source: nginx.conf
+        source: /nginx/nginx.conf
         target: /etc/nginx/nginx.conf
     depends_on:
       - frontend

@@ -6,4 +6,4 @@ EXPOSE 5000
 ENTRYPOINT ["python3", "app.py"]
 FROM nginx:latest
 WORKDIR /app
-COPY nginx/nginx.conf /etc/nginx/nginx.conf
+COPY /nginx/nginx.conf /etc/nginx/nginx.conf

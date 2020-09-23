@@ -1,6 +1,6 @@
 FROM python:3.8
 WORKDIR /backend
-COPY app.py .
+COPY . .
 RUN pip install -r requirements.txt
 RUN pip freeze > requirements.txt
 EXPOSE 5001
