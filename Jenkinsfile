@@ -14,16 +14,16 @@ pipeline{
                     }
                 }
             }
-            stage('Test') {
-                steps {
-                    script{
-                        if (env.rollback == 'false'){
-                            sh 'pytest'
-                            sh 'pytest --cov cne-sfia2-project'
-                        }
-                    }
-                }
-            }
+//             stage('Test') {
+//                 steps {
+//                     script{
+//                         if (env.rollback == 'false'){
+//                             sh "pytest"
+//                             sh "pytest --cov cne-sfia2-project"
+//                         }
+//                     }
+//                 }
+//             }
             stage('Tag & Push Image'){
                 steps{
                     script{
