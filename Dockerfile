@@ -1,7 +1,7 @@
 FROM python:3.8 as build
 WORKDIR ./
 COPY . .
-RUN pip install Flask && pip update
+RUN pip install Flask
 EXPOSE 5000
 ENTRYPOINT ["python3", "app.py"]
 FROM nginx:latest
