@@ -18,9 +18,8 @@ pipeline{
                 steps {
                     script{
                         if (env.rollback == 'false'){
-                                sh 'pytest test_frontend.py'
-                                sh 'pytest test_backend.py'
-                                sh 'pytest --cov cne-sfia2-project'
+                            sh 'pytest'
+                            sh 'pytest --cov cne-sfia2-project'
                         }
                     }
                 }
