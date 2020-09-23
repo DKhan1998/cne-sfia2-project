@@ -9,6 +9,8 @@ services:
         published: 5000
     volumes:
       - ./frontend:/frontend
+    depends_on:
+      - backend
   backend:
     container_name: backend
     build: ./backend
@@ -16,16 +18,19 @@ services:
     ports:
       - target: 5001
         published: 5001
+    environment:
+      - DB_PASSWORD=${DB_PASSWORD}
+      - SECRET_KEY=${SECRET_KEY}
     volumes:
       - ./backend:/backend
     depends_on:
-      - frontend
-  mysql:
+      - database
+  database:
     container_name: database
     image: cne-sfia2-project-database:latest
     build: ./database
     environment:
-      - MYSQL_ROOT_PASSWORD=${SECRET_KEY}
+      - MYSQL_ROOT_PASSWORD=${DB_PASSWORD}
       - MYSQL_DATABASE=${DATABASE_URI}
     volumes:
       - ./database:/database
