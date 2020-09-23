@@ -24,7 +24,8 @@ services:
       - MYSQL_ROOT_PASSWORD=${SECRET_KEY}
       - MYSQL_DATABASE=${DATABASE_URI}
   nginx:
-    build: nginx.conf
+    build: ./nginx
+    image: nginx:latest
     ports:
       - target: 80
         published: 80
