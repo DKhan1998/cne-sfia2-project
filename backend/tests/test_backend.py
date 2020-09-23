@@ -32,7 +32,3 @@ class TestViews(TestBase):
     def test_db_return(self):
         response = self.client.get(url_for('get_users'))
         self.assertEqual(response.status_code, 200)
-
-if __name__ == '__main__':
-    import xmlrunner
-    unittest.main(testRunner=xmlrunner.XMLTestRunner(output='test-reports'))

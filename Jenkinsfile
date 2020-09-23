@@ -1,7 +1,7 @@
 pipeline{
         agent any
         environment {
-            app_version = 'v2   '
+            app_version = 'v2'
             rollback = 'false'
         }
         stages{
@@ -14,22 +14,20 @@ pipeline{
                     }
                 }
             }
-//             stage('Test') {
-//                 steps {
-//                     script{
-//                         if (env.rollback == 'false'){
-//                             withPythonEnv('python') {
-//                                 sh 'pip install pytest'
-//                                 sh 'pytest test_frontend.py'
-//                                 sh 'pytest test_backend.py'
-//                             }
-//                         }
-//                     }
-//                 }
-//                 post {
-//                    always {junit 'test-reports/*.xml'}
-//                 }
-//             }
+            stage('Test') {
+                steps {
+                    script{
+                        if (env.rollback == 'false'){
+                            withPythonEnv('python') {
+                                sh 'pip install pytest'
+                                sh 'pytest test_frontend.py'
+                                sh 'pytest test_backend.py'
+                                sh 'pytest --cov cne-sfia2-project'
+                            }
+                        }
+                    }
+                }
+            }
             stage('Tag & Push Image'){
                 steps{
                     script{
