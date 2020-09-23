@@ -8,7 +8,7 @@ services:
       - target: 5000
         published: 5000
     volumes:
-      - ./frontend:/var/frontend
+      - ./frontend:/frontend
 
   backend:
     container_name: backend
@@ -20,8 +20,9 @@ services:
     environment:
       - SECRET_KEY=${SECRET_KEY}
     volumes:
-      - ./backend:/backend-data
-
+      - ./backend:/backend
+    depends_on:
+      - frontend
   database:
     container_name: database
     image: cne-sfia2-project-database:latest
@@ -31,7 +32,8 @@ services:
       - MYSQL_DATABASE=${DATABASE_URI}
     volumes:
       - ./database:/database
-
+    depends_on:
+      - backend
   nginx:
     build: nginx.conf
     ports:
