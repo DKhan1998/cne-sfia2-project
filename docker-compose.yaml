@@ -4,6 +4,7 @@ services:
     container_name: frontend
     build: ./frontend
     image: frontend:latest
+                    sh "docker-compose logs"
 
   backend:
     container_name: backend

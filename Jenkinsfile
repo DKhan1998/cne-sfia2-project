@@ -5,11 +5,6 @@ pipeline{
             rollback = 'false'
         }
         stages{
-            stage('Configure VM'){
-                steps{
-                    sh ""
-                }
-            }
             stage('Build Image'){
                 steps{
                     script{
@@ -42,11 +37,11 @@ pipeline{
             }
             stage('Deploy App'){
                 steps{
-                    sh "docker-compose pull"
+//                     sh "docker-compose pull"
                     sh "export DATABASE_URI=${DATABASE_URI}"
-                    sh "MYSQL_ROOT_PASSWORD=${SECRET_KEY}"
-                    sh "MYSQL_DATABASE=database"
-                    sh "SECRET_KEY=${SECRET_KEY}"
+                    sh "export MYSQL_ROOT_PASSWORD=${SECRET_KEY}"
+                    sh "export MYSQL_DATABASE=database"
+                    sh "export SECRET_KEY=${SECRET_KEY}"
                     sh "docker-compose up -d --remove-orphans"
                     sh "docker-compose logs"
                 }
