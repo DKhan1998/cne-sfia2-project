@@ -37,7 +37,9 @@ pipeline{
             }
             stage('Deploy App'){
                 steps{
-//                     sh "docker-compose pull"
+                    sh "chmod 400 /AWS/AWS_EU_Key.pem"
+                    sh "ssh -i "AWS_EU_Key.pem" ubuntu@ec2-18-130-127-82.eu-west-2.compute.amazonaws.com"
+                    sh "docker-compose pull"
                     sh "export DATABASE_URI=${DATABASE_URI}"
                     sh "export MYSQL_ROOT_PASSWORD=${SECRET_KEY}"
                     sh "export MYSQL_DATABASE=database"
