@@ -4,11 +4,15 @@ services:
     container_name: frontend
     build: ./frontend
     image: frontend:latest
+
   backend:
     container_name: backend
     build: ./backend
     image: backend:latest
     environment:
+      - MYSQL_ROOT_PASSWORD=${SECRET_KEY}
+      - MYSQL_DATABASE=database
+      - DATABASE_URI=${DATABASE_URI}
       - SECRET_KEY=${SECRET_KEY}
   database:
     container_name: database
@@ -16,7 +20,6 @@ services:
     build: ./database
     environment:
       - MYSQL_ROOT_PASSWORD=${SECRET_KEY}
-      - MYSQL_DATABASE=${DATABASE_URI}
 
   nginx:
     build: nginx
