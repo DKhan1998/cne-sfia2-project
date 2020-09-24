@@ -3,22 +3,16 @@ services:
   frontend:
     container_name: frontend
     build: ./frontend
-    image: cne-sfia2-project-frontend:latest
-    ports:
-      - target: 5000
-        published: 5000
+    image: frontend:latest
   backend:
     container_name: backend
     build: ./backend
-    image: cne-sfia2-project-backend:latest
-    ports:
-      - target: 5001
-        published: 5001
+    image: backend:latest
     environment:
       - SECRET_KEY=${SECRET_KEY}
   database:
     container_name: database
-    image: cne-sfia2-project-database:latest
+    image: database:latest
     build: ./database
     environment:
       - MYSQL_ROOT_PASSWORD=${SECRET_KEY}
