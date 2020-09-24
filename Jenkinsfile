@@ -1,7 +1,7 @@
 pipeline{
         agent any
         environment {
-            app_version = 'v2'
+            app_version = 'v1'
             rollback = 'false'
         }
         stages{
@@ -14,8 +14,7 @@ pipeline{
                 steps{
                     script{
                         if (env.rollback == 'false'){
-                            sh "export USER=${USER}"
-                            image = docker.build("${USER}/cne-sfia2-project")
+                            image = docker.build("dkhan20/cne-sfia2-project")
                         }
                     }
                 }
