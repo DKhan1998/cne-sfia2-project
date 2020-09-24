@@ -14,7 +14,8 @@ pipeline{
                 steps{
                     script{
                         if (env.rollback == 'false'){
-                            image = docker.build("dkhan20/cne-sfia2-project")
+                            sh "export USER=${USER}"
+                            image = docker.build("${USER}/cne-sfia2-project")
                         }
                     }
                 }
