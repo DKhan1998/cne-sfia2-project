@@ -35,17 +35,23 @@ pipeline{
                     }
                 }
             }
-            stage('Deploy App'){
+//             def remote = [:]
+//             remote.name = 'deploy-vm'
+//             remote.host = '3.11.13.180'
+//             remote.user = 'root'
+//             remote.password = 'password'
+//             remote.allowAnyHosts = true
+            stage('Remote SSH'){
                 steps{
-                    sh "chmod 400 /AWS/AWS_EU_Key.pem"
-                    sh "ssh ubuntu@ec2-18-130-127-82.eu-west-2.compute.amazonaws.com"
-                    sh "docker-compose pull"
-                    sh "export DATABASE_URI=${DATABASE_URI}"
-                    sh "export MYSQL_ROOT_PASSWORD=${SECRET_KEY}"
-                    sh "export MYSQL_DATABASE=database"
-                    sh "export SECRET_KEY=${SECRET_KEY}"
-                    sh "docker-compose up -d --remove-orphans"
-                    sh "docker-compose logs"
+                    docker.withRegistry('ssh ubuntu@ec2-18-130-127-82.eu-west-2.compute.amazonaws.com', 'aws-deployment-credentials'){
+                        sh "docker-compose pull"
+                        sh "export DATABASE_URI=${DATABASE_URI}"
+                        sh "export MYSQL_ROOT_PASSWORD=${SECRET_KEY}"
+                        sh "export MYSQL_DATABASE=database"
+                        sh "export SECRET_KEY=${SECRET_KEY}"
+                        sh "docker-compose up -d --remove-orphans"
+                        sh "docker-compose logs"
+                    }
                 }
             }
         }
