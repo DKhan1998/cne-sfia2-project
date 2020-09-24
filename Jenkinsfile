@@ -43,7 +43,7 @@ pipeline{
 //             remote.allowAnyHosts = true
             stage('Remote SSH'){
                 steps{
-                    docker.withRegistry('ssh ubuntu@ec2-18-130-127-82.eu-west-2.compute.amazonaws.com', 'aws-deployment-credentials'){
+                    docker.withRegistry('ubuntu@ec2-18-130-127-82.eu-west-2.compute.amazonaws.com', 'aws-deployment-credentials'){
                         sh "docker-compose pull"
                         sh "export DATABASE_URI=${DATABASE_URI}"
                         sh "export MYSQL_ROOT_PASSWORD=${SECRET_KEY}"
