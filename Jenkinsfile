@@ -45,13 +45,13 @@ pipeline{
             steps{
                 script{
                     docker.withRegistry('ubuntu@ec2-18-130-127-82.eu-west-2.compute.amazonaws.com', 'aws-deployment-credentials'){
-                        docker-compose pull
+                        sh "docker-compose pull"
                         sh "export DATABASE_URI=${DATABASE_URI}"
                         sh "export MYSQL_ROOT_PASSWORD=${SECRET_KEY}"
                         sh "export MYSQL_DATABASE=database"
                         sh "export SECRET_KEY=${SECRET_KEY}"
-                        docker-compose up -d --remove-orphans
-                        docker-compose logs
+                        sh "docker-compose up -d --remove-orphans"
+                        sh "docker-compose logs"
                     }
                 }
             }
