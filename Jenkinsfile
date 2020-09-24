@@ -42,8 +42,9 @@ pipeline{
             }
             stage('Deploy App'){
                 steps{
-                    sh "sudo -E DATABASE_URI=${DATABASE_URI} MYSQL_ROOT_PASSWORD=${SECRET_KEY} MYSQL_DATABASE=database SECRET_KEY=${SECRET_KEY}"
-                    sh "docker-compose pull && docker-compose up -d --remove-orphans"
+                    sh "docker-compose pull &&
+                        sudo -E DATABASE_URI=${DATABASE_URI} MYSQL_ROOT_PASSWORD=${SECRET_KEY} MYSQL_DATABASE=database SECRET_KEY=${SECRET_KEY}
+                        docker-compose up -d --remove-orphans"
                     sh "docker-compose logs"
                 }
             }
