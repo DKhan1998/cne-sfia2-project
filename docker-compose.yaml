@@ -10,16 +10,15 @@ services:
     build: ./backend
     image: backend:latest
     environment:
-      - MYSQL_ROOT_PASSWORD=${SECRET_KEY}
       - MYSQL_DATABASE=database
       - DATABASE_URI=${DATABASE_URI}
       - SECRET_KEY=${SECRET_KEY}
+      - MYSQL_ROOT_PASSWORD=${SECRET_KEY}
+
   database:
     container_name: database
     image: database:latest
     build: ./database
-    environment:
-      - MYSQL_ROOT_PASSWORD=${SECRET_KEY}
 
   nginx:
     build: nginx
