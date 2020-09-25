@@ -35,7 +35,8 @@ pipeline{
 //                        chmod 400 AWS_EU_Key.pem
 //                        ssh -i '${aws-development-credentials}' ubuntu@ec2-35-178-187-65.eu-west-2.compute.amazonaws.com
                         sh '''
-
+                        ssh -i '~/.aws/credentials/AWS_EU_Key.pem' ubuntu@$(aws ec2 describe-instances --query 'Reservations[*].Instances[*].PublicDnsName' --output text)
+                        docker-compose pull
                         export DATABASE_URI=${DATABASE_URI}
                         export MYSQL_ROOT_PASSWORD=${SECRET_KEY}
                         export MYSQL_DATABASE=database
