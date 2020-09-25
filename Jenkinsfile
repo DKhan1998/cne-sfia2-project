@@ -41,7 +41,7 @@ pipeline{
                         export MYSQL_ROOT_PASSWORD=${SECRET_KEY}
                         export MYSQL_DATABASE=database
                         export SECRET_KEY=${SECRET_KEY}
-                        docker-compose up -d --remove-orphans
+                        docker-compose up -d
                         docker-compose logs
                         '''
                 }
