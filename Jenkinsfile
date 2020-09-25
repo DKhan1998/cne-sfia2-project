@@ -14,16 +14,6 @@ pipeline{
                 }
             }
         }
-//             stage('Test') {
-//                 steps {
-//                     script{
-//                         if (env.rollback == 'false'){
-//                             sh "pytest"
-//                             sh "pytest --cov cne-sfia2-project"
-//                         }
-//                     }
-//                 }
-//             }
         stage('Tag & Push Image'){
             steps{
                 script{
@@ -35,12 +25,6 @@ pipeline{
                 }
             }
         }
-    //             def remote = [:]
-    //             remote.name = 'deploy-vm'
-    //             remote.host = '3.11.13.180'
-    //             remote.user = 'root'
-    //             remote.password = 'password'
-    //             remote.allowAnyHosts = true
         stage('Remote SSH'){
             steps{
                 script{
@@ -58,7 +42,6 @@ pipeline{
                         docker-compose up -d --remove-orphans
                         docker-compose logs
                         '''
-
                 }
             }
         }
