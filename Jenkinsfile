@@ -96,7 +96,9 @@ pipeline{
                     script{
                         docker.withCredentials([file('aws-development-credentials', 'AWS_EU_Key.pem'){
                             sh '''
-                            ssh -i ''
+                            export AWS_EU_Key=${AWS_EU_Key}
+                            chmod 400 AWS_EU_Key.pem
+                            ssh -i 'AWS_EU_Key.pem' ubuntu@ec2-35-178-187-65.eu-west-2.compute.amazonaws.com
                             docker-compose pull
                             export DATABASE_URI=${DATABASE_URI}
                             export MYSQL_ROOT_PASSWORD=${SECRET_KEY}
