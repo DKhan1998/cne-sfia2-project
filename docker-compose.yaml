@@ -9,17 +9,19 @@ services:
     container_name: backend
     build: ./backend
     image: backend:latest
+
+
+  database:
+    container_name: database
+    image: mysql:latest
+    build: ./database
     environment:
       - MYSQL_DATABASE=database
       - DATABASE_URI=${DATABASE_URI}
       - SECRET_KEY=${SECRET_KEY}
       - MYSQL_ROOT_PASSWORD=${SECRET_KEY}
-
-  database:
-    container_name: database
-    image: database:latest
-    build: ./database
-
+    volumes:
+      - "./sito/database/:/var/lib/database"
   nginx:
     build: nginx
     image: nginx:latest
