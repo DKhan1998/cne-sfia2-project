@@ -1,4 +1,4 @@
-FROM python:3.8
+FROM python:3.8-alpine
 WORKDIR /app
 COPY . .
 RUN pip install Flask && pip install -U pytest
