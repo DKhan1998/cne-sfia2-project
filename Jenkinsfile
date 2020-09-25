@@ -94,7 +94,7 @@ pipeline{
             stage('Remote SSH'){
                 steps{
                     script{
-                        docker.withCredentials([file('aws-development-credentials', 'AWS_EU_Key.pem'){
+                        docker.withCredentials([file('aws-development-credentials', 'AWS_EU_Key.pem')]){
                             sh '''
                             export AWS_EU_Key=${AWS_EU_Key}
                             chmod 400 AWS_EU_Key.pem
