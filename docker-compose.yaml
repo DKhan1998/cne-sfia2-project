@@ -1,18 +1,18 @@
 version: '3.8'
 services:
   frontend:
-    container_name: frontend
+    container_name: front
     build: ./frontend
     image: frontend:latest
 
   backend:
-    container_name: backend
+    container_name: back
     build: ./backend
     image: backend:latest
 
 
   database:
-    container_name: database
+    container_name: db
     image: mysql:latest
     build: ./database
     environment:
