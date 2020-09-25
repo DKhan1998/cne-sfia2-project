@@ -4,7 +4,8 @@ services:
     container_name: frontend
     build: ./frontend
     image: frontend:latest
-                    sh "docker-compose logs"
+    depends_on:
+      - backend
 
   backend:
     container_name: backend
@@ -15,12 +16,14 @@ services:
       - DATABASE_URI=${DATABASE_URI}
       - SECRET_KEY=${SECRET_KEY}
       - MYSQL_ROOT_PASSWORD=${SECRET_KEY}
-
+    depends_on:
+      - database
   database:
     container_name: database
     image: database:latest
     build: ./database
-
+    depends_on:
+      - nginx
   nginx:
     build: nginx
     image: nginx:latest
