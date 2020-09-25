@@ -14,16 +14,16 @@ pipeline{
                 }
             }
         }
-    //             stage('Test') {
-    //                 steps {
-    //                     script{
-    //                         if (env.rollback == 'false'){
-    //                             sh "pytest"
-    //                             sh "pytest --cov cne-sfia2-project"
-    //                         }
-    //                     }
-    //                 }
-    //             }
+//             stage('Test') {
+//                 steps {
+//                     script{
+//                         if (env.rollback == 'false'){
+//                             sh "pytest"
+//                             sh "pytest --cov cne-sfia2-project"
+//                         }
+//                     }
+//                 }
+//             }
         stage('Tag & Push Image'){
             steps{
                 script{
@@ -44,7 +44,7 @@ pipeline{
         stage('Remote SSH'){
             steps{
                 script{
-                    docker.withCredentials([file('aws-development-credentials', 'AWS_EU_Key.pem')]){
+                    withCredentials([file('aws-development-credentials', 'AWS_EU_Key.pem')]){
                         sh '''
                         export AWS_EU_Key=${AWS_EU_Key}
                         chmod 400 AWS_EU_Key.pem
