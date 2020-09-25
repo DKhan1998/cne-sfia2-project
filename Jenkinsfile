@@ -34,11 +34,11 @@ pipeline{
 //                        chmod 400 AWS_EU_Key.pem
 //                        ssh -i '${aws-development-credentials}' ubuntu@ec2-35-178-187-65.eu-west-2.compute.amazonaws.com
                         sh '''
-                        docker-compose pull
+
                         export DATABASE_URI=${DATABASE_URI}
                         export MYSQL_ROOT_PASSWORD=${SECRET_KEY}
                         export MYSQL_DATABASE=database
-                        export SECRET_KEY=${SECRET_KEY}"
+                        export SECRET_KEY=${SECRET_KEY}
                         docker-compose up -d --remove-orphans
                         docker-compose logs
                         '''
