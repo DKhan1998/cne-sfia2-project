@@ -12,7 +12,7 @@ pipeline{
                         sh '''
                         chmod 400 AWS_EU_Key.pem
 
-                        ssh -i "AWS_EU_Key.pem" ubuntu@ec2-35-179-94-29.eu-west-2.compute.amazonaws.com
+                        ssh -tt -i "AWS_EU_Key.pem" ubuntu@ec2-35-179-94-29.eu-west-2.compute.amazonaws.com
 
                         curl https://get.docker.com | sudo bash
 
