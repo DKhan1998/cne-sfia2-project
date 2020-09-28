@@ -5,26 +5,6 @@ pipeline{
         rollback = 'false'
     }
     stages{
-//         stage('Build Image'){
-//             steps{
-//                 script{
-//                     if (env.rollback == 'false'){
-//                         image = docker.build("dkhan20/cne-sfia2-project")
-//                     }
-//                 }
-//             }
-//         }
-//         stage('Tag & Push Image'){
-//             steps{
-//                 script{
-//                     if (env.rollback == 'false'){
-//                         docker.withRegistry('https://registry.hub.docker.com', 'docker-hub-credentials'){
-//                             image.push("${env.app_version}")
-//                         }
-//                     }
-//                 }
-//             }
-//         }
         stage('SSH Connect'){
             steps{
                 script{
@@ -46,6 +26,15 @@ pipeline{
                     }
                 }
             }
+        }
+        stage('Testing'){
+        steps{
+            script{
+                if (env.rollback == 'false'){
+
+                }
+            }
+        }
         }
     }
 }
