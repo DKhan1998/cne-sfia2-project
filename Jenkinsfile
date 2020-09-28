@@ -23,7 +23,7 @@ pipeline{
                         script{
                             if (env.rollback == 'false'){
                                 sh '''
-                                curl https://get.docker.com | sudo bash
+                                sudo curl https://get.docker.com | sudo bash
 
                                 sudo curl -L "https://github.com/docker/compose/releases/download/1.25.5/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
 
