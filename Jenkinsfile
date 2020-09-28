@@ -37,21 +37,17 @@ pipeline{
                     }
                 }
             }
-        }
-        stage('Remote SSH'){
             steps{
                 script{
-                    docker.withRegistry('https://registry.hub.docker.com', 'docker-hub-credentials'){
-                        sh '''
-                        docker-compose pull
-                        export DATABASE_URI=${DATABASE_URI}
-                        export MYSQL_ROOT_PASSWORD=${SECRET_KEY}
-                        export MYSQL_DATABASE=database
-                        export SECRET_KEY=${SECRET_KEY}
-                        docker-compose up -d
-                        docker-compose logs
-                        '''
-                    }
+                    sh '''
+                    docker-compose pull "dkhan20/cne-sfia2-project"
+                    export DATABASE_URI=${DATABASE_URI}
+                    export MYSQL_ROOT_PASSWORD=${SECRET_KEY}
+                    export MYSQL_DATABASE=database
+                    export SECRET_KEY=${SECRET_KEY}
+                    docker-compose up -d
+                    docker-compose logs
+                    '''
                 }
             }
         }
