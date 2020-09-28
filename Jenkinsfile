@@ -13,16 +13,6 @@ pipeline{
                         export AWS_EU_Key=${AWS_EU_Key}
 
                         ssh -tt -o "StrictHostKeyChecking=no" -i ${AWS_EU_Key} ubuntu@ec2-18-132-45-38.eu-west-2.compute.amazonaws.com
-
-                        curl https://get.docker.com | sudo bash
-
-                        sudo curl -L "https://github.com/docker/compose/releases/download/1.25.5/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
-
-                        sudo chmod +x /usr/local/bin/docker-compose
-
-                        sudo usermod -aG docker jenkins
-
-                        sudo systemctl restart jenkins
                         '''
                     }
                 }
