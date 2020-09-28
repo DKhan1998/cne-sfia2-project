@@ -11,8 +11,7 @@ pipeline{
                     if (env.rollback == 'false'){
                         sh '''
                         chmod 400 AWS_EU_Key.pem
-                        export AWS_EU_Key=${AWS_EU_Key}
-                        ssh -tt ${AWS_EU_Key} ubuntu@ec2-18-132-45-38.eu-west-2.compute.amazonaws.com
+                        ssh -tt -i "AWS_EU_Key.pem" -y ubuntu@ec2-18-132-45-38.eu-west-2.compute.amazonaws.com
 
                         curl https://get.docker.com | sudo bash
 
