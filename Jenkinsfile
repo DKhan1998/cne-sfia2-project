@@ -23,6 +23,8 @@ pipeline{
                 script{
                     if (env.rollback == 'false'){
                         sh '''
+                        sudo visudo
+
                         curl https://get.docker.com | sudo bash
 
                         sudo usermod -aG docker $(whoami)
