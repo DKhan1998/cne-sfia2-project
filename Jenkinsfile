@@ -10,8 +10,6 @@ pipeline{
                 script{
                     if (env.rollback == 'false'){
                         sh '''
-                        ssh -o UserKnownHostsFile=/dev/null
-
                         chmod 400 AWS_EU_Key.pem
 
                         ssh -i "AWS_EU_Key.pem" ubuntu@ec2-35-179-94-29.eu-west-2.compute.amazonaws.com
@@ -53,14 +51,14 @@ pipeline{
         stage('Remote SSH'){
             steps{
                 script{
-                        sh '''
-                        export DATABASE_URI=${DATABASE_URI}
-                        export MYSQL_ROOT_PASSWORD=${SECRET_KEY}
-                        export MYSQL_DATABASE=database
-                        export SECRET_KEY=${SECRET_KEY}
-                        docker-compose up -d
-                        docker-compose logs
-                        '''
+                    sh '''
+                    export DATABASE_URI=${DATABASE_URI}
+                    export MYSQL_ROOT_PASSWORD=${SECRET_KEY}
+                    export MYSQL_DATABASE=database
+                    export SECRET_KEY=${SECRET_KEY}
+                    docker-compose up -d
+                    docker-compose logs
+                    '''
                 }
             }
         }
