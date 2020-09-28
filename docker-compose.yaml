@@ -20,8 +20,6 @@ services:
       - DATABASE_URI=${DATABASE_URI}
       - SECRET_KEY=${SECRET_KEY}
       - MYSQL_ROOT_PASSWORD=${SECRET_KEY}
-    volumes:
-      - "./sito/database/:/var/lib/database"
   nginx:
     build: nginx
     image: nginx:latest
