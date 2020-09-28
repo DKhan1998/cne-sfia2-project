@@ -3,17 +3,12 @@ pipeline{
     environment {
         app_version = 'v1'
         rollback = 'false'
-        DATABASE_URI='${DATABASE_URI}'
-        MYSQL_ROOT_PASSWORD='${DB_PASSWORD}'
-        MYSQL_DATABASE='database'
-        SECRET_KEY='${SECRET_KEY}'
     }
     stages{
         stage('Build Image'){
             steps{
                 script{
                     if (env.rollback == 'false'){
-
                         image = docker.build("dkhan20/cne-sfia2-project")
                     }
                 }
@@ -48,7 +43,7 @@ pipeline{
                                 export MYSQL_DATABASE=database
                                 export SECRET_KEY=${SECRET_KEY}
                                 docker-compose pull cne-sfia2-project
-                                docker-compose up -d
+                                docker-compose up -E MYSQL_ROOT_PASSWORD=$DB_PASSWORD DB_PASSWORD=$DB_PASSWORD DATABASE_URI=$DATABASE_URI SECRET_KEY=$SECRET_KEY -d --build
                                 docker-compose logs
                              '''
                         }
