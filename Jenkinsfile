@@ -9,7 +9,6 @@ pipeline{
             steps{
                 script{
                     if (env.rollback == 'false'){
-                        ssh khan.i.daood@34.89.54.11
                         image = docker.build("dkhan20/cne-sfia2-project")
                     }
                 }
