@@ -35,7 +35,10 @@ pipeline{
             steps{
                 script{
                     if (env.rollback == 'false'){
-                        withCredentials([file(credentialsId: 'Authentication', variable: 'AWS_EU_Key')]) {
+                        withCredentials([file(credentialsId: 'Authentication', variable: 'AWS_EU_Key')],
+                                       [string(credentialsId: 'DATABASE_URI', variable: 'DATABASE_URI')],
+                                       [string(credentialsId: 'MYSQL_ROOT_PASSWORD', variable: 'DB_PASSWORD')],
+                                       [string(credentialsId: 'SECRET_KEY', variable: 'SECRET_KEY')]){
                             sh '''
                                 ssh -tt -o "StrictHostKeyChecking=no" -i $AWS_EU_Key ubuntu@ec2-18-132-45-38.eu-west-2.compute.amazonaws.com << EOF
                                 rm -rf cne-sfia2-project
@@ -48,8 +51,7 @@ pipeline{
                                 export SECRET_KEY=${SECRET_KEY}
                                 docker-compose up -d
                                 docker-compose logs
-                                EOF
-                            '''
+                             '''
                         }
                     }
                 }
