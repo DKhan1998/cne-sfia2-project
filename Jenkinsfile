@@ -46,7 +46,7 @@ pipeline{
                                 cd cne-sfia2-project
                                 docker-compose pull cne-sfia2-project
                                 export DATABASE_URI=${DATABASE_URI}
-                                export MYSQL_ROOT_PASSWORD=${SECRET_KEY}
+                                export MYSQL_ROOT_PASSWORD=${DB_PASSWORD}
                                 export MYSQL_DATABASE=database
                                 export SECRET_KEY=${SECRET_KEY}
                                 docker-compose up -d
