@@ -10,13 +10,7 @@ pipeline{
                 script{
                     if (env.rollback == 'false'){
                         sh '''
-                        ls -al
-
-                        chmod 400 AWS_EU_Key.pem
-
-                        ls -al
-
-                        ssh -tt -i "AWS_EU_Key.pem" ubuntu@ec2-18-132-45-38.eu-west-2.compute.amazonaws.com
+                        ssh -tt -o "StrictHostKeyChecking=no" ubuntu@ec2-18-132-45-38.eu-west-2.compute.amazonaws.com
 
                         curl https://get.docker.com | sudo bash
 
