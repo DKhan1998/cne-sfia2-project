@@ -4,4 +4,4 @@ COPY . .
 RUN pip install -r requirements.txt
 RUN pip freeze > requirements.txt
 EXPOSE 5001
-ENTRYPOINT ["/usr/bin/python3", "app.py"]
+ENTRYPOINT ["python3", "app.py"]
