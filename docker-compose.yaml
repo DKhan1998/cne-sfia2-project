@@ -9,6 +9,7 @@ services:
         published: 5000
     depends_on:
       - backend
+
   backend:
     container_name: back
     build: ./backend
@@ -33,3 +34,16 @@ services:
       - DATABASE_URI=${DATABASE_URI}
       - SECRET_KEY=${SECRET_KEY}
       - MYSQL_ROOT_PASSWORD=${SECRET_KEY}
+
+  nginx:
+    build: nginx/nginx.conf
+    image: nginx:latest
+    ports:
+      - target: 80
+        published: 80
+    volumes:
+      - type: bind
+        source: ./nginx/nginx.conf
+        target: /etc/nginx/nginx.conf
+    depends_on:
+      - frontend
