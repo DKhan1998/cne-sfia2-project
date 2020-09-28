@@ -43,7 +43,7 @@ pipeline{
                                 export MYSQL_DATABASE=database
                                 export SECRET_KEY=${SECRET_KEY}
                                 docker-compose pull cne-sfia2-project
-                                docker-compose up -E MYSQL_ROOT_PASSWORD=$DB_PASSWORD DB_PASSWORD=$DB_PASSWORD DATABASE_URI=$DATABASE_URI SECRET_KEY=$SECRET_KEY -d --build
+                                sudo -E MYSQL_ROOT_PASSWORD=$DB_PASSWORD DB_PASSWORD=$DB_PASSWORD DATABASE_URI=$DATABASE_URI SECRET_KEY=$SECRET_KEY docker-compose up -d --build
                                 docker-compose logs
                              '''
                         }
