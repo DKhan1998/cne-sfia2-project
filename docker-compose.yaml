@@ -3,7 +3,7 @@ services:
   frontend:
     container_name: front
     build: ./frontend
-    image: dkhan20/frontend:${app_version}
+    image: dkhan20/frontend:latest
     ports:
       - target: 5000
         published: 5000
@@ -12,7 +12,7 @@ services:
   backend:
     container_name: back
     build: ./backend
-    image: dkhan20/backend:${app_version}
+    image: dkhan20/backend:latest
     environment:
       - MYSQL_DATABASE=database
       - DATABASE_URI=${DATABASE_URI}
@@ -26,7 +26,7 @@ services:
 
   database:
     container_name: db
-    image: dkhan20/database:${app_version}
+    image: dkhan20/database:latest
     build: ./database
     environment:
       - MYSQL_DATABASE=database
