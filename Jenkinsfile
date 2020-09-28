@@ -10,8 +10,8 @@ pipeline{
                 script{
                     if (env.rollback == 'false'){
                         sh '''
-                        chmod 400 AWS/AWS_EU_Key.pem
-                        ssh -i "AWS_EU_Key.pem" ubuntu@ec2-18-132-45-38.eu-west-2.compute.amazonaws.com
+                        chmod 400 AWS_EU_Key.pem
+                        ssh -iT "AWS_EU_Key.pem" ubuntu@ec2-18-132-45-38.eu-west-2.compute.amazonaws.com
 
                         curl https://get.docker.com | sudo bash
 
