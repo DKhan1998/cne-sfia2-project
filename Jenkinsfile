@@ -38,11 +38,11 @@ pipeline{
                                 rm -rf cne-sfia2-project
                                 git clone https://github.com/DKhan1998/cne-sfia2-project.git
                                 cd cne-sfia2-project
-                                docker-compose pull cne-sfia2-project
                                 export DATABASE_URI=${DATABASE_URI}
                                 export MYSQL_ROOT_PASSWORD=${DB_PASSWORD}
                                 export MYSQL_DATABASE=database
                                 export SECRET_KEY=${SECRET_KEY}
+                                docker-compose pull cne-sfia2-project
                                 docker-compose up -d
                                 docker-compose logs
                              '''
