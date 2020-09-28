@@ -3,21 +3,30 @@ services:
   frontend:
     container_name: front
     build: ./frontend
-    image: frontend:${app_version}
-
+    image: dkhan20/frontend:${app_version}
+    ports:
+      - target: 5000
+        published: 5000
+    depends_on:
+      - backend
   backend:
     container_name: back
     build: ./backend
-    image: backend:${app_version}
+    image: dkhan20/backend:${app_version}
     environment:
       - MYSQL_DATABASE=database
       - DATABASE_URI=${DATABASE_URI}
       - SECRET_KEY=${SECRET_KEY}
       - MYSQL_ROOT_PASSWORD=${SECRET_KEY}
+    ports:
+      - target: 5001
+        published: 5001
+    depends_on:
+      - database
 
   database:
     container_name: db
-    image: mysql:${app_version}
+    image: dkhan20/database:${app_version}
     build: ./database
     environment:
       - MYSQL_DATABASE=database
