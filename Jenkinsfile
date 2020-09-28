@@ -9,11 +9,11 @@ pipeline{
             steps{
                 script{
                     if (env.rollback == 'false'){
-                        sh '''
-                        export AWS_EU_Key=${AWS_EU_Key}
-
-                        ssh -tt -o "StrictHostKeyChecking=no" -i ${AWS_EU_Key} ubuntu@ec2-18-132-45-38.eu-west-2.compute.amazonaws.com
-                        '''
+                        withCredentials([file(credentialsId: 'Authentication', variable: 'AWS_EU_Key')]) {
+                            sh '''
+                                ssh -tt -o "StrictHostKeyChecking=no" -i $AWS_EU_Key ubuntu@ec2-18-132-45-38.eu-west-2.compute.amazonaws.com
+                            '''
+                        }
                     }
                 }
             }
