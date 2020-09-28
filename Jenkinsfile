@@ -9,7 +9,12 @@ pipeline{
             steps{
                 script{
                     if (env.rollback == 'false'){
-                        image = docker.build("dkhan20/cne-sfia2-project")
+                    withCredentials([string(credentialsId: 'DATABASE_URI', variable: 'DATABASE_URI'),
+                                   string(credentialsId: 'MYSQL_ROOT_PASSWORD', variable: 'DB_PASSWORD'),
+                                   string(credentialsId: 'SECRET_KEY', variable: 'SECRET_KEY')]){
+                        image = docker.build("dkhan20/cne-sfia2-project", [MYSQL_ROOT_PASSWORD=DB_PASSWORD,
+                                                                           DATABASE_URI=DATABASE_URI,
+                                                                           SECRET_KEY=SECRET_KEY])
                     }
                 }
             }
