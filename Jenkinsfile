@@ -9,9 +9,7 @@ pipeline{
             steps{
                 script{
                     if (env.rollback == 'false'){
-                        docker.withRegistry('https://registry.hub.docker.com', 'docker-hub-credentials'){
-                            image = docker.build("dkhan20/cne-sfia2-project")
-                        }
+                        image = docker.build("dkhan20/cne-sfia2-project")
                     }
                 }
             }
