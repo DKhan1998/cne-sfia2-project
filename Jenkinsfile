@@ -18,8 +18,11 @@ pipeline{
                         sudo curl -L "https://github.com/docker/compose/releases/download/1.25.5/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
 
                         sudo chmod +x /usr/local/bin/docker-compose
+
+                        sudo usermod -aG docker jenkins
+
+                        sudo systemctl restart jenkins
                         '''
-                        image = docker.build("dkhan20/cne-sfia2-project")
                     }
                 }
             }

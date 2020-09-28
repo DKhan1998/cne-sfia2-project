@@ -3,17 +3,21 @@ services:
   frontend:
     container_name: front
     build: ./frontend
-    image: frontend:latest
+    image: frontend:${app_version}
 
   backend:
     container_name: back
     build: ./backend
-    image: backend:latest
-
+    image: backend:${app_version}
+    environment:
+      - MYSQL_DATABASE=database
+      - DATABASE_URI=${DATABASE_URI}
+      - SECRET_KEY=${SECRET_KEY}
+      - MYSQL_ROOT_PASSWORD=${SECRET_KEY}
 
   database:
     container_name: db
-    image: mysql:latest
+    image: mysql:${app_version}
     build: ./database
     environment:
       - MYSQL_DATABASE=database
