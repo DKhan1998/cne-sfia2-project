@@ -3,10 +3,10 @@ pipeline{
     environment {
         app_version = 'v1'
         rollback = 'false'
-        DATABASE_URI=${DATABASE_URI}
-        MYSQL_ROOT_PASSWORD=${DB_PASSWORD}
-        MYSQL_DATABASE=database
-        SECRET_KEY=${SECRET_KEY}
+        DATABASE_URI='${DATABASE_URI}'
+        MYSQL_ROOT_PASSWORD='${DB_PASSWORD}'
+        MYSQL_DATABASE='database'
+        SECRET_KEY='${SECRET_KEY}'
     }
     stages{
         stage('Build Image'){
