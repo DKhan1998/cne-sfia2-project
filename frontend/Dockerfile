@@ -4,4 +4,4 @@ COPY . .
 RUN pip install -r requirements.txt
 RUN pip freeze > requirements.txt
 EXPOSE 5000
-ENTRYPOINT ["python", "app.py"]
+ENTRYPOINT ["/usr/local/bin/python3", "app.py"]

@@ -36,7 +36,6 @@ services:
       - MYSQL_ROOT_PASSWORD=${DB_PASSWORD}
 
   nginx:
-    build: nginx/nginx.conf
     image: nginx:latest
     ports:
       - target: 80
