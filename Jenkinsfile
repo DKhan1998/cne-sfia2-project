@@ -9,6 +9,12 @@ pipeline{
             steps{
                 script{
                     if (env.rollback == 'false'){
+                        sh '''
+                            export DATABASE_URI=${DATABASE_URI}
+                            export MYSQL_ROOT_PASSWORD=${SECRET_KEY}
+                            export MYSQL_DATABASE=database
+                            export SECRET_KEY=${SECRET_KEY}
+                        '''
                         image = docker.build("dkhan20/cne-sfia2-project")
                     }
                 }

@@ -33,7 +33,7 @@ services:
       - MYSQL_DATABASE=database
       - DATABASE_URI=${DATABASE_URI}
       - SECRET_KEY=${SECRET_KEY}
-      - MYSQL_ROOT_PASSWORD=${SECRET_KEY}
+      - MYSQL_ROOT_PASSWORD=${DB_PASSWORD}
 
   nginx:
     build: nginx/nginx.conf
@@ -47,3 +47,5 @@ services:
         target: /etc/nginx/nginx.conf
     depends_on:
       - frontend
+
+
