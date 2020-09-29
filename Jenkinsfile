@@ -20,8 +20,7 @@ pipeline{
                                 cd cne-sfia2-project
 
                                 sudo -E MYSQL_ROOT_PASSWORD=$pwd DB_PASSWORD=$pwd DATABASE_URI=$uri SECRET_KEY=$key docker-compose up -d --build
-                                sudo docker-compose logs
-                                exit
+
                                 >> EOF
                              '''
                         }
