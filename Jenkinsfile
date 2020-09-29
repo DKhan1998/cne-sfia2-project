@@ -31,13 +31,17 @@ pipeline{
             }
         }
         stage('Testing'){
-        steps{
-            script{
-                if (env.rollback == 'false'){
-
+            steps{
+                script{
+                    if (env.rollback == 'false'){
+                        withPythonEnv('python3') {
+                            sh 'pip install pytest'
+                            sh 'pytest'
+                            sh 'pytest --cov application'
+                        }
+                    }
                 }
             }
-        }
         }
     }
 }
