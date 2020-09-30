@@ -1,0 +1,10 @@
+---
+- hosts: jenkins-vm
+  tasks:
+    - name: Install Jenkins
+      script: Jenkins_Install.sh
+
+- hosts: testing-vm deploy-vm
+  tasks:
+    - name: Install Docker
+      script: Dockerfile.sh
