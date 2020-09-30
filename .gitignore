@@ -6,3 +6,5 @@
 /.idea/misc.xml
 /.idea/modules.xml
 /.idea/vcs.xml
+
+Ansible/AWS_EU_Key.pem
