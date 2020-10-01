@@ -26,8 +26,8 @@ pipeline{
                                 sudo apt install mysql-client-core-5.7 -y
                                 mysql -h $uri -P 3306 -u admin -p$pwd
 
-                                # Upload the databse
-                                source databse/Create.sql;
+                                # Upload the database
+                                source database/Create.sql;
 
                                 exit
 
