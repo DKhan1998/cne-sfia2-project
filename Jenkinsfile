@@ -25,7 +25,7 @@ pipeline{
                 }
             }
         }
-        stage('SSH Connect'){
+        stage('SSH Connect | Run | Test application in testing-vm'){
             steps{
                 script{
                     if (env.rollback == 'false'){
@@ -38,7 +38,7 @@ pipeline{
                                 ssh -tt -o "StrictHostKeyChecking=no" -i $AWS_EU_Key ubuntu@ec2-18-130-230-68.eu-west-2.compute.amazonaws.com << EOF
 
                                 # Connect to mysql instance
-                                mysql -h testdb.cgytirb7uezx.eu-west-2.rds.amazonaws.com -P 3306 -u admin -p
+                                mysql -h $TEST_DATABASE_URI -P 3306 -u admin -p$DB_PASSWORD
 
                                 # Upload the databse
                                 mysql> source databse/Create.sql;
