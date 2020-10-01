@@ -41,9 +41,7 @@ pipeline{
 
                                 sudo -E MYSQL_ROOT_PASSWORD=$pwd DB_PASSWORD=$pwd DATABASE_URI=$uri SECRET_KEY=$key docker-compose up -d --build
 
-                                exit
 
-                                >> EOF
                              '''
                         }
                     }
@@ -57,11 +55,15 @@ pipeline{
                         withPythonEnv('python3') {
                             sh '''
 
-                            pytest frontend/tests/test_frontend.py
+                                . ./cne-sfia2-project/bin/activate
 
-                            pytest backend/tests/test_backend.py
+                                cd cne-sfia2-project/src/firedrake
 
-                            pytest --cov application
+                                python -m pytest --durations=200 -n 11 --cov cne-sfia2-project -v frontend/tests/test_frontend
+
+                                python -m pytest --durations=200 -n 11 --cov cne-sfia2-project -v backend/tests/test_backend
+
+                            >> EOF
 
                             '''
                         }
