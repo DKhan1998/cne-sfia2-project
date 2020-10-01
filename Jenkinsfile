@@ -34,9 +34,7 @@ pipeline{
                                 # build project using docker-compose and environment variables
                                 sudo -E MYSQL_ROOT_PASSWORD=$pwd DB_PASSWORD=$pwd TEST_DATABASE_URI=$uri SECRET_KEY=$key docker-compose up -d --build
 
-                                pytest --durations=200 -v frontend/tests/
-
-                                pytest --durations=200 -v backend/tests/
+                                pytest --durations=200
 
                                 pytest --cov cne-sfia2-project
 
