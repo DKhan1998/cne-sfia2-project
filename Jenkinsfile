@@ -5,26 +5,6 @@ pipeline{
         rollback = 'false'
     }
     stages{
-        stage('Build Image'){
-            steps{
-                script{
-                    if (env.rollback == 'false'){
-                        image = docker.build("dkhan20/cne-sfia2-project")
-                    }
-                }
-            }
-        }
-        stage('Tag & Push Image'){
-            steps{
-                script{
-                    if (env.rollback == 'false'){
-                        docker.withRegistry('https://registry.hub.docker.com', 'docker-hub-credentials'){
-                            image.push("${env.app_version}")
-                        }
-                    }
-                }
-            }
-        }
         stage('SSH Connect | Run | Test application in testing-vm'){
             steps{
                 script{
@@ -44,7 +24,7 @@ pipeline{
                                 mysql> source databse/Create.sql;
 
                                 # Pull project from docker-hub
-                                docker-compose pull
+                                # docker-compose pull
 
                                 # build project using docker-compose and environment variables
                                 sudo -E MYSQL_ROOT_PASSWORD=$pwd DB_PASSWORD=$pwd DATABASE_URI=$uri SECRET_KEY=$key docker-compose up -d --build
