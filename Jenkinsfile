@@ -45,9 +45,9 @@ pipeline{
                         withPythonEnv('python3') {
                             sh '''
 
-                                pytest --durations=200 -n 11 --cov cne-sfia2-project -v frontend/tests/test_frontend
+                                pytest --durations=200 -n 11 --cov cne-sfia2-project -v frontend/tests/test_frontend.py
 
-                                pytest --durations=200 -n 11 --cov cne-sfia2-project -v backend/tests/test_backend
+                                pytest --durations=200 -n 11 --cov cne-sfia2-project -v backend/tests/test_backend.py
 
                             '''
                         }
