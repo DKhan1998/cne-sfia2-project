@@ -15,7 +15,7 @@ pipeline{
                                        string(credentialsId: 'SECRET_KEY', variable: 'key')]){
                             sh '''
                                 # SSH into testing-vm
-                                ssh -tt -o "StrictHostKeyChecking=no" -i $AWS_EU_Key ubuntu@ec2-18-130-230-68.eu-west-2.compute.amazonaws.com << EOF
+                                ssh -tt -o "StrictHostKeyChecking=no" -i $AWS_EU_Key ec2-35-178-19-136.eu-west-2.compute.amazonaws.com << EOF
 
                                 # Connect to mysql instance
                                 mysql -h $TEST_DATABASE_URI -P 3306 -u admin -p$DB_PASSWORD
