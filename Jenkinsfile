@@ -55,6 +55,8 @@ pipeline{
                                 # SSH into testing-vm
                                 ssh -tt -o "StrictHostKeyChecking=no" -i $AWS_EU_Key ubuntu@ec2-35-178-19-136.eu-west-2.compute.amazonaws.com << EOF
 
+                                sudo apt install python-pytest
+
                                 pytest --durations=200 -n 11 --cov cne-sfia2-project -v frontend/tests/test_frontend.py
 
                                 pytest --durations=200 -n 11 --cov cne-sfia2-project -v backend/tests/test_backend.py
