@@ -11,6 +11,7 @@
     - name: Install Python Testing Environment
       script: pyenv_install.sh
 
+
 - hosts: deploy-vm
   tasks:
     - name: Install Docker

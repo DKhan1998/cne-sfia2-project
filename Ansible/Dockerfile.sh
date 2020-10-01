@@ -17,4 +17,9 @@ sudo curl -L "https://github.com/docker/compose/releases/download/${version}/doc
 sudo chmod +x /usr/local/bin/docker-compose
 
 
+# install Mysql
+ansible-galaxy collection install community.aws
 
+#Install mysql requirements
+sudo yum update -y
+sudo yum install mysql -y

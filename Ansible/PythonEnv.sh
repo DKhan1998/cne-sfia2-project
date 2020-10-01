@@ -1,4 +1,11 @@
-# INstall python environment
+# Install python environment
+ansible-galaxy collection install community.aws
+
+# Install mysql requirements
+sudo yum update -y
+sudo yum install mysql -y
+
+# Install python environment
 
 sudo apt-get update
 sudo apt-get -y upgrade
