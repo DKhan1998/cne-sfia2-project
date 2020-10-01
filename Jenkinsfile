@@ -47,7 +47,10 @@ pipeline{
             steps{
                 script{
                     if (env.rollback == 'false'){
-
+                        withCredentials([file(credentialsId: 'Authentication', variable: 'AWS_EU_Key'),
+                                       string(credentialsId: 'TEST_DATABASE_URI', variable: 'uri'),
+                                       string(credentialsId: 'MYSQL_ROOT_PASSWORD', variable: 'pwd'),
+                                       string(credentialsId: 'SECRET_KEY', variable: 'key')]){
                             sh '''
                                 # SSH into testing-vm
                                 ssh -tt -o "StrictHostKeyChecking=no" -i $AWS_EU_Key ubuntu@ec2-35-178-19-136.eu-west-2.compute.amazonaws.com << EOF
@@ -60,7 +63,7 @@ pipeline{
 
                                 >> EOF
                             '''
-
+                        }
                     }
                 }
             }
