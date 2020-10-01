@@ -24,7 +24,7 @@ pipeline{
 
                                 # Connect to mysql instance
                                 sudo apt install mysql-client-core-5.7 -y
-                                mysql -h $TEST_DATABASE_URI -P 3306 -u admin -p$DB_PASSWORD
+                                mysql -h $uri -P 3306 -u admin -p$pwd
 
                                 # Upload the databse
                                 source databse/Create.sql;
