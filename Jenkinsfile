@@ -55,10 +55,6 @@ pipeline{
                         withPythonEnv('python3') {
                             sh '''
 
-                                . ./cne-sfia2-project/bin/activate
-
-                                cd cne-sfia2-project/src/firedrake
-
                                 python -m pytest --durations=200 -n 11 --cov cne-sfia2-project -v frontend/tests/test_frontend
 
                                 python -m pytest --durations=200 -n 11 --cov cne-sfia2-project -v backend/tests/test_backend
