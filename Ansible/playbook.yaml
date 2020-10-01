@@ -1,6 +1,5 @@
 ---
 
-
 - hosts: testing-vm
   tasks:
     - name: Install Docker
