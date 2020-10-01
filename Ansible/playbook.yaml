@@ -4,15 +4,7 @@
     - name: Install Jenkins
       script: Jenkins_Install.sh
 
-- hosts: testing-vm
-  tasks:
-    - name: Install Docker
-      script: Dockerfile.sh
-    - name: Install Python Testing Environment
-      script: pyenv_install.sh
-
-
-- hosts: deploy-vm
+- hosts: testing-vm deploy-vm
   tasks:
     - name: Install Docker
       script: Dockerfile.sh

@@ -7,7 +7,7 @@ sudo usermod -aG docker $(whoami)
 # Download docker-compose
 
 # make sure jq & curl is installed
-sudo apt update
+sudo apt update -y
 sudo apt install -y curl jq
 # set which version to download (latest)
 version=$(curl -s https://api.github.com/repos/docker/compose/releases/latest | jq -r '.tag_name')
@@ -16,10 +16,3 @@ sudo curl -L "https://github.com/docker/compose/releases/download/${version}/doc
 # make the file executable
 sudo chmod +x /usr/local/bin/docker-compose
 
-
-# install Mysql
-ansible-galaxy collection install community.aws
-
-#Install mysql requirements
-sudo yum update -y
-sudo yum install mysql -y

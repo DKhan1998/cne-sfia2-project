@@ -37,13 +37,19 @@ pipeline{
                                 # SSH into testing-vm
                                 ssh -tt -o "StrictHostKeyChecking=no" -i $AWS_EU_Key ubuntu@ec2-18-130-230-68.eu-west-2.compute.amazonaws.com << EOF
 
-                                $ scp -r -i $AWS_EU_Key.pem database/Create.sql ubuntu@ec2-35-178-19-136.eu-west-2.compute.amazonaws.com:/db/Create.sql
+                                # Connect to mysql instance
+                                mysql -h testdb.cgytirb7uezx.eu-west-2.rds.amazonaws.com -P 3306 -u admin -p
 
+                                # Upload the databse
+                                mysql> source databse/Create.sql;
+
+                                # Pull project from docker-hub
                                 docker-compose pull
 
+                                # build project using docker-compose and environment variables
                                 sudo -E MYSQL_ROOT_PASSWORD=$pwd DB_PASSWORD=$pwd DATABASE_URI=$uri SECRET_KEY=$key docker-compose up -d --build
 
-
+                                >> EOF
                              '''
                         }
                     }
@@ -60,8 +66,6 @@ pipeline{
                                 pytest --durations=200 -n 11 --cov cne-sfia2-project -v frontend/tests/test_frontend
 
                                 pytest --durations=200 -n 11 --cov cne-sfia2-project -v backend/tests/test_backend
-
-                            >> EOF
 
                             '''
                         }
