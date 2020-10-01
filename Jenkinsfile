@@ -23,10 +23,11 @@ pipeline{
                                 cd cne-sfia2-project
 
                                 # Connect to mysql instance
+                                sudo apt install mysql-client-core-5.7
                                 mysql -h $TEST_DATABASE_URI -P 3306 -u admin -p$DB_PASSWORD
 
                                 # Upload the databse
-                                mysql> source databse/Create.sql;
+                                source databse/Create.sql;
 
                                 exit
 
