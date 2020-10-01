@@ -15,7 +15,12 @@ pipeline{
                                        string(credentialsId: 'SECRET_KEY', variable: 'key')]){
                             sh '''
                                 # SSH into testing-vm
-                                ssh -tt -o "StrictHostKeyChecking=no" -i $AWS_EU_Key ec2-35-178-19-136.eu-west-2.compute.amazonaws.com << EOF
+                                ssh -tt -o "StrictHostKeyChecking=no" -i $AWS_EU_Key ubuntu@ec2-35-178-19-136.eu-west-2.compute.amazonaws.com << EOF
+
+                                # Pull project from docker-hub
+                                rm -rf cne-sfia2-project
+                                git clone https://github.com/DKhan1998/cne-sfia2-project.git
+                                cd cne-sfia2-project
 
                                 # Connect to mysql instance
                                 mysql -h $TEST_DATABASE_URI -P 3306 -u admin -p$DB_PASSWORD
@@ -23,10 +28,7 @@ pipeline{
                                 # Upload the databse
                                 mysql> source databse/Create.sql;
 
-                                # Pull project from docker-hub
-                                rm -rf cne-sfia2-project
-                                git clone https://github.com/DKhan1998/cne-sfia2-project.git
-                                cd cne-sfia2-project
+                                exit
 
                                 # build project using docker-compose and environment variables
                                 sudo -E MYSQL_ROOT_PASSWORD=$pwd DB_PASSWORD=$pwd TEST_DATABASE_URI=$uri SECRET_KEY=$key docker-compose up -d --build
