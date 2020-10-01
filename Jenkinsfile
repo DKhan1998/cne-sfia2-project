@@ -24,7 +24,9 @@ pipeline{
                                 mysql> source databse/Create.sql;
 
                                 # Pull project from docker-hub
-                                # docker-compose pull
+                                rm -rf cne-sfia2-project
+                                git clone https://github.com/DKhan1998/cne-sfia2-project.git
+                                cd cne-sfia2-project
 
                                 # build project using docker-compose and environment variables
                                 sudo -E MYSQL_ROOT_PASSWORD=$pwd DB_PASSWORD=$pwd DATABASE_URI=$uri SECRET_KEY=$key docker-compose up -d --build
