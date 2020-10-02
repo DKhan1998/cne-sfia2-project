@@ -45,6 +45,34 @@ pipeline{
                 }
             }
         }
+        stage('Testing'){
+            steps{
+                script{
+                    if (env.rollback == 'false'){
+                        withCredentials([file(credentialsId: 'Authentication', variable: 'AWS_EU_Key'),
+                                       string(credentialsId: 'TEST_DATABASE_URI', variable: 'uri'),
+                                       string(credentialsId: 'MYSQL_ROOT_PASSWORD', variable: 'pwd'),
+                                       string(credentialsId: 'SECRET_KEY', variable: 'key')]){
+                            sh '''
+                                # SSH into testing-vm
+                                ssh -tt -o "StrictHostKeyChecking=no" -i $AWS_EU_Key ubuntu@ec2-18-134-133-25.eu-west-2.compute.amazonaws.com << EOF
 
+                                sudo apt install python-pytest
+
+                                cd cne-sfia2-project
+
+                                pytest --durations=200 -n 11 --cov cne-sfia2-project -v frontend/tests/test_frontend.py
+
+                                pytest --durations=200 -n 11 --cov cne-sfia2-project -v backend/tests/test_backend.py
+
+                                exit
+
+                                >> EOF
+                            '''
+                        }
+                    }
+                }
+            }
+        }
     }
 }
