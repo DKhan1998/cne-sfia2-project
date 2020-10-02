@@ -5,6 +5,7 @@ pipeline{
         rollback = 'false'
     }
     stages{
+        stage('')
         stage('SSH Connect | Run | Test application in testing-vm'){
             steps{
                 script{

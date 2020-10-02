@@ -5,3 +5,5 @@ RUN pip install -r requirements.txt
 RUN pip freeze > requirements.txt
 EXPOSE 5001
 ENTRYPOINT ["python3", "app.py"]
+RUN pytest
+ENTRYPOINT["python3", "tests/test_backend.py"]
