@@ -61,9 +61,9 @@ pipeline{
 
                                 cd cne-sfia2-project
 
-                                pytest --durations=200 -n 11 --cov cne-sfia2-project -v frontend/tests/test_frontend.py
+                                sudo -E TEST_DATABASE_URI=mysql+pymysql://admin:password@testdb.cgytirb7uezx.eu-west-2.rds.amazonaws.com:3306/testdb SECRET_KEY=password docker exec -it front pytest
 
-                                pytest --durations=200 -n 11 --cov cne-sfia2-project -v backend/tests/test_backend.py
+                                sudo -E TEST_DATABASE_URI=mysql+pymysql://admin:password@testdb.cgytirb7uezx.eu-west-2.rds.amazonaws.com:3306/testdb SECRET_KEY=password docker exec -it back pytest
 
                                 exit
 
