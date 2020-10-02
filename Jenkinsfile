@@ -16,7 +16,7 @@ pipeline{
                                        string(credentialsId: 'SECRET_KEY', variable: 'key')]){
                             sh '''
                                 # SSH into testing-vm
-                                ssh -tt -o "StrictHostKeyChecking=no" -i $AWS_EU_Key ubuntu@ec2-35-178-19-136.eu-west-2.compute.amazonaws.com << EOF
+                                ssh -tt -o "StrictHostKeyChecking=no" -i $AWS_EU_Key ubuntu@ec2-18-134-133-25.eu-west-2.compute.amazonaws.com << EOF
 
                                 # Pull project from docker-hub
                                 rm -rf cne-sfia2-project
@@ -55,12 +55,11 @@ pipeline{
                                        string(credentialsId: 'SECRET_KEY', variable: 'key')]){
                             sh '''
                                 # SSH into testing-vm
-                                ssh -tt -o "StrictHostKeyChecking=no" -i $AWS_EU_Key ubuntu@ec2-35-178-19-136.eu-west-2.compute.amazonaws.com << EOF
+                                ssh -tt -o "StrictHostKeyChecking=no" -i $AWS_EU_Key ubuntu@ec2-18-134-133-25.eu-west-2.compute.amazonaws.com << EOF
 
                                 sudo apt install python-pytest
 
-                                # docker run -d -p 80:80 --name cne-sfia2-project cne-sfia2-project:${app_version}
-
+#                                docker run -d -p 80:80 --name cne-sfia2-project cne-sfia2-project:${app_version}
                                 pytest --durations=200 -n 11 --cov cne-sfia2-project -v frontend/tests/test_frontend.py
 
                                 pytest --durations=200 -n 11 --cov cne-sfia2-project -v backend/tests/test_backend.py
