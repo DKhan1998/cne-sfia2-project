@@ -8,10 +8,7 @@ pipeline{
         stage('Build Image'){
             steps{
                 script{
-                    docker.build("dkhan20/cne-sfia2-project").withCredentials(string(credentialsId: 'DATABASE_URI', variable: 'uri'),
-                                                                                string(credentialsId: 'TEST_DATABASE_URI', variable: 'tUri'),
-                                                                                string(credentialsId: 'MYSQL_ROOT_PASSWORD', variable: 'pwd'),
-                                                                                string(credentialsId: 'SECRET_KEY', variable: 'key')])
+                    docker.build("dkhan20/cne-sfia2-project")
                 }
             }
         }
