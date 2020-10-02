@@ -11,7 +11,7 @@ pipeline{
                 script{
                     if (env.rollback == 'false'){
                         withCredentials([file(credentialsId: 'Authentication', variable: 'AWS_EU_Key'),
-                                       string(credentialsId: 'TEST_DATABASE_URI', variable: 'uri'),
+                                       string(credentialsId: 'DATABASE_URI', variable: 'uri'),
                                        string(credentialsId: 'MYSQL_ROOT_PASSWORD', variable: 'pwd'),
                                        string(credentialsId: 'SECRET_KEY', variable: 'key')]){
                             sh '''
@@ -34,7 +34,7 @@ pipeline{
                                 exit
 
                                 # build project using docker-compose and environment variables
-                                sudo -E MYSQL_ROOT_PASSWORD=$pwd DB_PASSWORD=$pwd TEST_DATABASE_URI=$uri SECRET_KEY=$key docker-compose up -d --build
+                                sudo -E MYSQL_ROOT_PASSWORD=$pwd DB_PASSWORD=$pwd DATABASE_URI=$uri SECRET_KEY=$key docker-compose up -d --build
 
                                exit
 
@@ -50,7 +50,7 @@ pipeline{
                 script{
                     if (env.rollback == 'false'){
                         withCredentials([file(credentialsId: 'Authentication', variable: 'AWS_EU_Key'),
-                                       string(credentialsId: 'TEST_DATABASE_URI', variable: 'uri'),
+                                       string(credentialsId: 'DATABASE_URI', variable: 'uri'),
                                        string(credentialsId: 'MYSQL_ROOT_PASSWORD', variable: 'pwd'),
                                        string(credentialsId: 'SECRET_KEY', variable: 'key')]){
                             sh '''
@@ -61,9 +61,9 @@ pipeline{
 
                                 cd cne-sfia2-project
 
-                                sudo -E TEST_DATABASE_URI=mysql+pymysql://admin:password@testdb.cgytirb7uezx.eu-west-2.rds.amazonaws.com:3306/testdb SECRET_KEY=password docker exec -it front pytest
+                                sudo -E DATABASE_URI=mysql+pymysql://admin:password@testdb.cgytirb7uezx.eu-west-2.rds.amazonaws.com:3306/testdb SECRET_KEY=password docker exec -it front pytest
 
-                                sudo -E TEST_DATABASE_URI=mysql+pymysql://admin:password@testdb.cgytirb7uezx.eu-west-2.rds.amazonaws.com:3306/testdb SECRET_KEY=password docker exec -it back pytest
+                                sudo -E DATABASE_URI=mysql+pymysql://admin:password@testdb.cgytirb7uezx.eu-west-2.rds.amazonaws.com:3306/testdb SECRET_KEY=password docker exec -it back pytest
 
                                 exit
 
