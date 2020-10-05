@@ -16,6 +16,7 @@ services:
     image: dkhan20/backend:latest
     environment:
       - MYSQL_DATABASE=database
+      - TEST_DATABASE_URI=${TEST_DATABASE_URI}
       - DATABASE_URI=${DATABASE_URI}
       - SECRET_KEY=${SECRET_KEY}
       - MYSQL_ROOT_PASSWORD=${DB_PASSWORD}
