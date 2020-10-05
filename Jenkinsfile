@@ -7,8 +7,23 @@ pipeline{
     stages{
         stage('Build Image'){
             steps{
+              script{
+                    if (env.rollback == 'false'){
+                        docker.withRegistry('https://registry.hub.docker.com', 'docker-hub-credentials'){
+                            sh 'docker build -t dkhan20/cne-sfia2-project'
+                        }
+                    }
+                }
+            }
+        }
+        stage('Tag & Push Image'){
+            steps{
                 script{
-                    docker.build("dkhan20/cne-sfia2-project")
+                    if (env.rollback == 'false'){
+                        docker.withRegistry('https://registry.hub.docker.com', 'docker-hub-credentials'){
+                            image.push("${env.app_version}")
+                        }
+                    } master
                 }
             }
         }
@@ -26,14 +41,10 @@ pipeline{
                                 ssh -tt -o "StrictHostKeyChecking=no" -i $AWS_EU_Key ubuntu@ec2-18-134-133-25.eu-west-2.compute.amazonaws.com << EOF
 
                                 # Pull project from docker-hub
-                                rm -rf cne-sfia2-project
-                                git clone https://github.com/DKhan1998/cne-sfia2-project.git
-                                cd cne-sfia2-project
+                                docker-compose pull cne-sfia2-project
 
-
-
-                               exit
-
+                                # build project using docker-compose and environment variables
+                                sudo -E MYSQL_ROOT_PASSWORD=$pwd DB_PASSWORD=$pwd TEST_DATABASE_URI=$uri SECRET_KEY=$key docker-compose up -d --build
                                 >> EOF
                              '''
                         }
