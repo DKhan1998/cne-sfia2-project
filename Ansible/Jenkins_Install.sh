@@ -1,4 +1,8 @@
 #!/bin/bash
+curl https://get.docker.com | sudo bash
+
+
+# Run Jenkins Install
 if type apt > /dev/null; then
     pkg_mgr=apt
     java="openjdk-8-jre"
@@ -40,3 +44,5 @@ until [[ -n "\$(cat  .jenkins/secrets/initialAdminPassword)" ]]; do
 done
 echo "initial admin password: \$(cat .jenkins/secrets/initialAdminPassword)"
 EOF
+
+sudo usermod -aG docker $(whoami)
