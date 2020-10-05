@@ -22,18 +22,7 @@ services:
     ports:
       - target: 5001
         published: 5001
-    depends_on:
-      - database
 
-  database:
-    container_name: db
-    image: dkhan20/database:latest
-    build: ./database
-    environment:
-      - MYSQL_DATABASE=database
-      - DATABASE_URI=${DATABASE_URI}
-      - SECRET_KEY=${SECRET_KEY}
-      - MYSQL_ROOT_PASSWORD=${DB_PASSWORD}
 
   nginx:
     image: nginx:latest
