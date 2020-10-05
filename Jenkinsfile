@@ -9,8 +9,12 @@ pipeline{
             steps{
               script{
                     if (env.rollback == 'false'){
-                        docker.withRegistry('https://registry.hub.docker.com', 'docker-hub-credentials'){
-                            sh 'docker-compose -f docker-compose.yaml run -rm compile'
+                        withCredentials([file(credentialsId: 'Authentication', variable: 'AWS_EU_Key'),
+                                       string(credentialsId: 'DATABASE_URI', variable: 'uri'),
+                                       string(credentialsId: 'TEST_DATABASE_URI', variable: 'tUri'),
+                                       string(credentialsId: 'MYSQL_ROOT_PASSWORD', variable: 'pwd'),
+                                       string(credentialsId: 'SECRET_KEY', variable: 'key')]){
+                            sh 'sudo -E MYSQL_ROOT_PASSWORD=$pwd DB_PASSWORD=$pwd TEST_DATABASE_URI=$uri SECRET_KEY=$key docker-compose -d --build'
                         }
                     }
                 }
@@ -23,7 +27,7 @@ pipeline{
                         docker.withRegistry('https://registry.hub.docker.com', 'docker-hub-credentials'){
                             image.push("${env.app_version}")
                         }
-                    } master
+                    }
                 }
             }
         }
