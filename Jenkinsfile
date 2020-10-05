@@ -40,34 +40,40 @@ pipeline{
                 }
             }
         }
-//         stage('Testing'){
-//             steps{
-//                 script{
-//                     if (env.rollback == 'false'){
-//                         withCredentials([file(credentialsId: 'Authentication', variable: 'AWS_EU_Key'),
-//                                        string(credentialsId: 'DATABASE_URI', variable: 'uri'),
-//                                        string(credentialsId: 'TEST_DATABASE_URI', variable: 'tUri'),
-//                                        string(credentialsId: 'MYSQL_ROOT_PASSWORD', variable: 'pwd'),
-//                                        string(credentialsId: 'SECRET_KEY', variable: 'key')]){
-//                             sh '''
-//                                 # SSH into testing-vm
-//                                 ssh -tt -o "StrictHostKeyChecking=no" -i $AWS_EU_Key ubuntu@ec2-18-134-133-25.eu-west-2.compute.amazonaws.com << EOF
-//
-//                                 cd cne-sfia2-project
-//
-//                                 sudo -E TEST_DATABASE_URI=$uri SECRET_KEY=$pwd docker exec -it front pytest
-//                                 exit
-//
-//                                 sudo -E DATABASE_URI=$uri SECRET_KEY=$pwd docker exec -it back pytest
-//
-//                                 exit
-//
-//                                 >> EOF
-//                             '''
-//                         }
-//                     }
-//                 }
-//             }
-//         }
+        stage('Testing'){
+            steps{
+                script{
+                    if (env.rollback == 'false'){
+                        withCredentials([file(credentialsId: 'Authentication', variable: 'AWS_EU_Key'),
+                                       string(credentialsId: 'DATABASE_URI', variable: 'uri'),
+                                       string(credentialsId: 'TEST_DATABASE_URI', variable: 'tUri'),
+                                       string(credentialsId: 'MYSQL_ROOT_PASSWORD', variable: 'pwd'),
+                                       string(credentialsId: 'SECRET_KEY', variable: 'key')]){
+                            sh '''
+                                # SSH into testing-vm
+                                ssh -tt -o "StrictHostKeyChecking=no" -i $AWS_EU_Key ubuntu@ec2-18-134-133-25.eu-west-2.compute.amazonaws.com << EOF
+
+                                cd cne-sfia2-project
+
+                                export MYSQL_ROOT_PASSWORD=$pwd
+                                export DB_PASSWORD=$pwd
+                                export TEST_DATABASE_URI=$tUri
+                                export DATABASE_URI=$uri
+                                export SECRET_KEY=$key
+
+                                sudo -E TEST_DATABASE_URI=$uri SECRET_KEY=$pwd docker exec -it front pytest
+                                exit
+
+                                sudo -E DATABASE_URI=$uri SECRET_KEY=$pwd docker exec -it back pytest
+
+                                exit
+
+                                >> EOF
+                            '''
+                        }
+                    }
+                }
+            }
+        }
     }
 }
