@@ -61,7 +61,8 @@ pipeline{
                                 export DATABASE_URI=$uri
                                 export SECRET_KEY=$key
 
-                                sudo -E TEST_DATABASE_URI=$uri SECRET_KEY=$pwd docker exec -it pytest  --cov-report=cne-sfi2-project
+                                sudo -E TEST_DATABASE_URI=$uri SECRET_KEY=$pwd docker exec -it front pytest  --cov-report=tests/
+                                sudo -E TEST_DATABASE_URI=$uri SECRET_KEY=$pwd docker exec -it back pytest  --cov-report=tests/
 
                                 exit
 
