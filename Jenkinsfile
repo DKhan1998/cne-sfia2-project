@@ -14,7 +14,7 @@ pipeline{
                                        string(credentialsId: 'TEST_DATABASE_URI', variable: 'tUri'),
                                        string(credentialsId: 'MYSQL_ROOT_PASSWORD', variable: 'pwd'),
                                        string(credentialsId: 'SECRET_KEY', variable: 'key')]){
-                            sh 'sudo -E MYSQL_ROOT_PASSWORD=$pwd DB_PASSWORD=$pwd TEST_DATABASE_URI=$uri SECRET_KEY=$key docker-compose -d build'
+                            sh 'echo password | sudo -S -E MYSQL_ROOT_PASSWORD=$pwd DB_PASSWORD=$pwd TEST_DATABASE_URI=$uri SECRET_KEY=$key docker-compose -d build'
                         }
                     }
                 }
