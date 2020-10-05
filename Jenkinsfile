@@ -10,7 +10,7 @@ pipeline{
               script{
                     if (env.rollback == 'false'){
                         docker.withRegistry('https://registry.hub.docker.com', 'docker-hub-credentials'){
-                            sh 'docker build -t dkhan20/cne-sfia2-project'
+                            sh 'docker-compose -f docker-compose.yaml run -rm compile'
                         }
                     }
                 }
