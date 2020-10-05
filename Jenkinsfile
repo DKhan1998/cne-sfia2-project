@@ -22,8 +22,11 @@ pipeline{
                                 git clone https://github.com/DKhan1998/cne-sfia2-project.git
                                 cd cne-sfia2-project
 
-                                # Pull project from docker-hub
-                                docker-compose pull cne-sfia2-project
+                                export MYSQL_ROOT_PASSWORD=$pwd
+                                export DB_PASSWORD=$pwd
+                                export TEST_DATABASE_URI=$tUri
+                                export DATABASE_URI=$uri
+                                export SECRET_KEY=$key
 
                                 # build project using docker-compose and environment variables
                                 sudo -E MYSQL_ROOT_PASSWORD=$pwd DB_PASSWORD=$pwd TEST_DATABASE_URI=$tUri SECRET_KEY=$key docker-compose up -d --build
