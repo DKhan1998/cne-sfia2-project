@@ -62,7 +62,6 @@ pipeline{
                                 export SECRET_KEY=$key
 
                                 sudo -E TEST_DATABASE_URI=$uri SECRET_KEY=$pwd docker exec -it front pytest
-                                exit
 
                                 sudo -E DATABASE_URI=$uri SECRET_KEY=$pwd docker exec -it back pytest
 
