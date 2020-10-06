@@ -62,8 +62,8 @@ pipeline{
                                 export SECRET_KEY=$key
 
                                 sudo -E TEST_DATABASE_URI=$uri SECRET_KEY=$pwd docker exec front pytest  --cov-report term --cov=application
-                                exit
                                 sudo -E TEST_DATABASE_URI=$uri SECRET_KEY=$pwd docker exec back pytest  --cov-report term --cov=application
+
                                 exit
 
                                 >> EOF
