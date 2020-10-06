@@ -1,7 +1,7 @@
 pipeline{
     agent any
     environment {
-        app_version = 'v2'
+        app_version = 'v3'
         rollback = 'false'
     }
     stages{
@@ -61,8 +61,8 @@ pipeline{
                                 export DATABASE_URI=$uri
                                 export SECRET_KEY=$key
 
-                                sudo -E TEST_DATABASE_URI=$uri SECRET_KEY=$pwd docker exec front pytest  --cov-report term --cov=application
-                                sudo -E TEST_DATABASE_URI=$uri SECRET_KEY=$pwd docker exec back pytest  --cov-report term --cov=application
+                                sudo -E TEST_DATABASE_URI=$tUri SECRET_KEY=$pwd docker exec front pytest  --cov-report term --cov=application
+                                sudo -E TEST_DATABASE_URI=$tUri SECRET_KEY=$pwd docker exec back pytest  --cov-report term --cov=application
 
                                 exit
 
