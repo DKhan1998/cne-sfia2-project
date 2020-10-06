@@ -16,7 +16,7 @@ pipeline{
                                        string(credentialsId: 'SECRET_KEY', variable: 'key')]){
                             sh '''
                                 # SSH into testing-vm
-                                ssh -tt -o "StrictHostKeyChecking=no" -i $AWS_EU_Key ubuntu@ec2-18-134-133-25.eu-west-2.compute.amazonaws.com << EOF
+                                ssh -tt -o "StrictHostKeyChecking=no" -i $AWS_EU_Key ubuntu@ec2-35-177-75-30.eu-west-2.compute.amazonaws.com << EOF
 
                                 rm -rf cne-sfia2-project
                                 git clone https://github.com/DKhan1998/cne-sfia2-project.git
@@ -51,7 +51,7 @@ pipeline{
                                        string(credentialsId: 'SECRET_KEY', variable: 'key')]){
                             sh '''
                                 # SSH into testing-vm
-                                ssh -tt -o "StrictHostKeyChecking=no" -i $AWS_EU_Key ubuntu@ec2-18-134-133-25.eu-west-2.compute.amazonaws.com << EOF
+                                ssh -tt -o "StrictHostKeyChecking=no" -i $AWS_EU_Key ubuntu@ec2-35-177-75-30.eu-west-2.compute.amazonaws.com << EOF
 
                                 cd cne-sfia2-project
 
@@ -61,9 +61,9 @@ pipeline{
                                 export DATABASE_URI=$uri
                                 export SECRET_KEY=$key
 
-                                sudo -E TEST_DATABASE_URI=$uri SECRET_KEY=$pwd docker exec -it front pytest  --cov-report term --cov=front tests/
-                                sudo -E TEST_DATABASE_URI=$uri SECRET_KEY=$pwd docker exec -it back pytest  --cov-report term --cov=back tests/
-
+                                sudo -E TEST_DATABASE_URI=$uri SECRET_KEY=$pwd docker exec front pytest  --cov-report term --cov=application
+                                exit
+                                sudo -E TEST_DATABASE_URI=$uri SECRET_KEY=$pwd docker exec back pytest  --cov-report term --cov=application
                                 exit
 
                                 >> EOF
