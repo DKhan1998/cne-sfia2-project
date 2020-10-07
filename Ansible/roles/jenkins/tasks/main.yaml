@@ -1,0 +1,41 @@
+---
+- name: install dependencies
+  apt:
+    pkg:
+      - wget
+      - git
+      - openjdk-8-jre
+    state: present
+    # run an apt update before installing the packages
+    update_cache: true
+
+- name: ensure the jenkins apt repository key is installed
+  apt_key:
+    url: https://pkg.jenkins.io/debian-stable/jenkins.io.key
+    state: present
+  become: yes
+
+- name: ensure the repository is configured
+  apt_repository:
+    repo: 'deb https://pkg.jenkins.io/debian-stable binary/'
+    state: present
+  become: yes
+
+- name: ensure jenkins is installed
+  apt:
+    name: jenkins
+    update_cache:  yes
+  become: yes
+
+- name: ensure jenkins is running
+  service: name=jenkins state=started
+
+- name: init password jenkin
+  shell: cat /var/lib/jenkins/secrets/initialAdminPassword
+  changed_when: false
+  register: result
+
+- name: print init password jenkins
+  debug:
+    var: result.stdout
+
