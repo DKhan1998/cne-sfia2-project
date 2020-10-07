@@ -5,24 +5,6 @@ pipeline{
         rollback = 'false'
     }
     stages{
-        stage('Build Image'){
-            steps{
-                script{
-                        if (env.rollback == 'false'){
-                       withCredentials([file(credentialsId: 'Authentication', variable: 'AWS_EU_Key'),
-                                      string(credentialsId: 'DATABASE_URI', variable: 'uri'),
-                                      string(credentialsId: 'TEST_DATABASE_URI', variable: 'tUri'),
-                                      string(credentialsId: 'MYSQL_ROOT_PASSWORD', variable: 'pwd'),
-                                      string(credentialsId: 'SECRET_KEY', variable: 'key')]){
-                           sh '''
-                           sudo -E MYSQL_ROOT_PASSWORD=$pwd DB_PASSWORD=$pwd TEST_DATABASE_URI=$tUri SECRET_KEY=$key docker-compose -d --build
-
-
-                           '''
-                    }
-                }
-            }
-        }
         stage('SSH Connect | Run | Test application in testing-vm'){
             steps{
                 script{
