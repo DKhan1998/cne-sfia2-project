@@ -7,7 +7,6 @@
 /.idea/modules.xml
 /.idea/vcs.xml
 
-Ansible/AWS_EU_Key.pem
-
 /Ansible
-/Terraform
+/resource
+

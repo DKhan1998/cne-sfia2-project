@@ -1,14 +1,16 @@
 ---
-- name: Install Jenkins
-  hosts: jenkins-vm
+- name: Install Jenkins on Jenkins vm
+  hosts: jenkins
   gather_facts: false
   become: true
   tasks:
-    - name: Install jenkins
     - import_role:
         name: jenkins
 
-- hosts: testing-deploy-vm
+- name: Install Docker in Test vm
+  hosts: testvm
   tasks:
-    - name: Install Docker
-      script: Dockerfile.sh
+    - import_role:
+        name: docker
+    -import_role:
+        name: docker-compose

@@ -52,7 +52,7 @@ pipeline{
                                        string(credentialsId: 'SECRET_KEY', variable: 'key')]){
                             sh '''
                                 # SSH into testing-vm
-                                ssh -tt -o "StrictHostKeyChecking=no" -i $AWS_EU_Key ubuntu@ec2-35-177-75-30.eu-west-2.compute.amazonaws.com << EOF
+                                ssh -tt -o "StrictHostKeyChecking=no" -i $AWS_EU_Key $ << EOF
 
                                 cd cne-sfia2-project
 
