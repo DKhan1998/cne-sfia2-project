@@ -70,7 +70,7 @@ pipeline{
                         load "./Ansible/.envvars/tf_db.groovy"
                         sh """
                             # SSH into testing-vm
-                            ssh -tt -o "StrictHostKeyChecking=no" -i ${env.EC2_private_key} ${env.testvm_user} << EOF
+                            ssh -tt -o "StrictHostKeyChecking=no" -i '${key}' ${env.testvm_user} << EOF
 
                             cd cne-sfia2-project
 
