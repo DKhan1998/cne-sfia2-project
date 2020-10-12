@@ -47,7 +47,6 @@ pipeline{
                             load "Ansible/.envvars/tf_db.groovy"
                             load "Ansible/.envvars/tf_ansible.groovy"
                             sh """
-                                cd cne-sfia2-project
 
                                 # Export variables to build project
                                 export MYSQL_ROOT_PASSWORD=${env.MYSQL_ROOT_PASSWORD}
