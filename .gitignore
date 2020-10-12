@@ -9,4 +9,6 @@
 *.pem
 resource/modules/infrastructure/.terraform
 resource/modules/infrastructure/AWS_EU_Key.pem
+resource/modules/infrastructure/.terraform/modules
+resource/modules/infrastructure/.terraform/plugins
 
