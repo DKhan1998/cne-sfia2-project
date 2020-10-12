@@ -8,6 +8,5 @@
 /.idea/vcs.xml
 *.pem
 resource/.terraform
-Ansible
 resource
 
