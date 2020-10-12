@@ -13,15 +13,17 @@ pipeline{
                             withCredentials([file(credentialsId: 'ansible_vars', variable: 'ansible_vars'),
                                            file(credentialsId: 'ansible_vars', variable: 'db_vars')]){
                                 sh '''
+                                    load "$JENKINS_HOME/.envvars/tf_ansible.groovy"
+
                                     # Export variables to build project
-                                    export MYSQL_ROOT_PASSWORD=$envtf_MYSQL_ROOT_PASSWORD
-                                    export DB_PASSWORD=$envtf_DB_PASSWORD
-                                    export TEST_DATABASE_URI=$envtf_TEST_DATABASE_URI
-                                    export DATABASE_URI=$envtf_DATABASE_URI
-                                    export SECRET_KEY=$envtf_SECRET_KEY
+                                    export MYSQL_ROOT_PASSWORD=$env.MYSQL_ROOT_PASSWORD
+                                    export DB_PASSWORD=$env.DB_PASSWORD
+                                    export TEST_DATABASE_URI=$env.TEST_DATABASE_URI
+                                    export DATABASE_URI=$env.DATABASE_URI
+                                    export SECRET_KEY=$env.SECRET_KEY
 
                                     # build project using docker-compose and environment variables
-                                    sudo -E MYSQL_ROOT_PASSWORD=$envtf_MYSQL_ROOT_PASSWORD $envtf_DB_PASSWORD TEST_DATABASE_URI=$envtf_TEST_DATABASE_URI SECRET_KEY=$envtf_SECRET_KEY docker-compose build
+                                    sudo -E MYSQL_ROOT_PASSWORD=$env.MYSQL_ROOT_PASSWORD=$env.DB_PASSWORD TEST_DATABASE_URI=$env.TEST_DATABASE_URI SECRET_KEY=$env.SECRET_KEY docker-compose build
 
                                     exit
 
