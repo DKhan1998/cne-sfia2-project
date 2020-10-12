@@ -9,28 +9,23 @@ pipeline{
             steps{
                 script{
                     if (env.rollback == 'false'){
-                        readProperties(file: "Ansible/roles/common/vars/tf_ansible_vars.yml").each {key, value -> env[key] = value } {
-                            withCredentials([file(credentialsId: 'ansible_vars', variable: 'ansible_vars'),
-                                           file(credentialsId: 'ansible_vars', variable: 'db_vars')]){
-                                sh '''
-                                    load ".envvars/tf_ansible.groovy"
+                        sh '''
+                            load ".envvars/tf_ansible.groovy"
 
-                                    # Export variables to build project
-                                    export MYSQL_ROOT_PASSWORD=$env.MYSQL_ROOT_PASSWORD
-                                    export DB_PASSWORD=$env.DB_PASSWORD
-                                    export TEST_DATABASE_URI=$env.TEST_DATABASE_URI
-                                    export DATABASE_URI=$env.DATABASE_URI
-                                    export SECRET_KEY=$env.SECRET_KEY
+                            # Export variables to build project
+                            export MYSQL_ROOT_PASSWORD=$env.MYSQL_ROOT_PASSWORD
+                            export DB_PASSWORD=$env.DB_PASSWORD
+                            export TEST_DATABASE_URI=$env.TEST_DATABASE_URI
+                            export DATABASE_URI=$env.DATABASE_URI
+                            export SECRET_KEY=$env.SECRET_KEY
 
-                                    # build project using docker-compose and environment variables
-                                    sudo -E MYSQL_ROOT_PASSWORD=$env.MYSQL_ROOT_PASSWORD=$env.DB_PASSWORD TEST_DATABASE_URI=$env.TEST_DATABASE_URI SECRET_KEY=$env.SECRET_KEY docker-compose build
+                            # build project using docker-compose and environment variables
+                            sudo -E MYSQL_ROOT_PASSWORD=$env.MYSQL_ROOT_PASSWORD=$env.DB_PASSWORD TEST_DATABASE_URI=$env.TEST_DATABASE_URI SECRET_KEY=$env.SECRET_KEY docker-compose build
 
-                                    exit
+                            exit
 
-                                    >> EOF
-                                 '''
-                            }
-                        }
+                            >> EOF
+                         '''
                     }
                 }
             }
