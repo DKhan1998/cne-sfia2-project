@@ -9,7 +9,7 @@ pipeline{
             steps{
                 script{
                     if (env.rollback == 'false'){
-                        load "./.envvars/tf_ansible.groovy"
+                        load "./Ansible/.envvars/tf_ansible.groovy"
                         sh '''
 
                             # Export variables to build project
@@ -34,7 +34,7 @@ pipeline{
             steps{
                 script{
                     if (env.rollback == 'false'){
-                            load "./.envvars/tf_ansible.groovy"
+                            load "./Ansible/.envvars/tf_ansible.groovy"
                             sh '''
                                 # SSH into testing-vm
                                 ssh -tt -o "StrictHostKeyChecking=no" -i $env.EC2_private_key $env.jenkins_user << EOF
@@ -55,11 +55,7 @@ pipeline{
             steps{
                 script{
                     if (env.rollback == 'false'){
-                        withCredentials([file(credentialsId: 'Authentication', variable: 'AWS_EU_Key'),
-                                       string(credentialsId: 'DATABASE_URI', variable: 'uri'),
-                                       string(credentialsId: 'TEST_DATABASE_URI', variable: 'tUri'),
-                                       string(credentialsId: 'MYSQL_ROOT_PASSWORD', variable: 'pwd'),
-                                       string(credentialsId: 'SECRET_KEY', variable: 'key')]){
+                            load "./Ansible/.envvars/tf_ansible.groovy"
                             sh '''
                                 # SSH into testing-vm
                                 ssh -tt -o "StrictHostKeyChecking=no" -i $env.EC2_private_key $env.testvm_user << EOF
