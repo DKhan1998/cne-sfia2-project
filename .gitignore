@@ -7,6 +7,6 @@
 /.idea/modules.xml
 /.idea/vcs.xml
 *.pem
-resource/.terraform
-resource
+resource/modules/infrastructure/.terraform
+resource/modules/infrastructure/AWS_EU_Key.pem
 
