@@ -3,31 +3,31 @@ pipeline{
     environment {
         app_version = 'v3'
         rollback = 'false'
-        readProperties(file: "Ansible/roles/common/vars/tf_ansible_vars.yml").each {key, value -> env[key] = value }
-        readProperties(file: "Ansible/roles/common/vars/tf_db_vars.yml").each {key, value -> env[key] = value }
     }
     stages{
         stage('Build Containers'){
             steps{
                 script{
                     if (env.rollback == 'false'){
-                        withCredentials([file(credentialsId: 'ansible_vars', variable: 'ansible_vars'),
-                                       file(credentialsId: 'ansible_vars', variable: 'db_vars')]){
-                            sh '''
-                                # Export variables to build project
-                                export MYSQL_ROOT_PASSWORD=$envtf_MYSQL_ROOT_PASSWORD
-                                export DB_PASSWORD=$envtf_DB_PASSWORD
-                                export TEST_DATABASE_URI=$envtf_TEST_DATABASE_URI
-                                export DATABASE_URI=$envtf_DATABASE_URI
-                                export SECRET_KEY=$envtf_SECRET_KEY
+                        readProperties(file: "Ansible/roles/common/vars/tf_ansible_vars.yml").each {key, value -> env[key] = value } {
+                            withCredentials([file(credentialsId: 'ansible_vars', variable: 'ansible_vars'),
+                                           file(credentialsId: 'ansible_vars', variable: 'db_vars')]){
+                                sh '''
+                                    # Export variables to build project
+                                    export MYSQL_ROOT_PASSWORD=$envtf_MYSQL_ROOT_PASSWORD
+                                    export DB_PASSWORD=$envtf_DB_PASSWORD
+                                    export TEST_DATABASE_URI=$envtf_TEST_DATABASE_URI
+                                    export DATABASE_URI=$envtf_DATABASE_URI
+                                    export SECRET_KEY=$envtf_SECRET_KEY
 
-                                # build project using docker-compose and environment variables
-                                sudo -E MYSQL_ROOT_PASSWORD=$envtf_MYSQL_ROOT_PASSWORD $envtf_DB_PASSWORD TEST_DATABASE_URI=$envtf_TEST_DATABASE_URI SECRET_KEY=$envtf_SECRET_KEY docker-compose build
+                                    # build project using docker-compose and environment variables
+                                    sudo -E MYSQL_ROOT_PASSWORD=$envtf_MYSQL_ROOT_PASSWORD $envtf_DB_PASSWORD TEST_DATABASE_URI=$envtf_TEST_DATABASE_URI SECRET_KEY=$envtf_SECRET_KEY docker-compose build
 
-                                exit
+                                    exit
 
-                                >> EOF
-                             '''
+                                    >> EOF
+                                 '''
+                            }
                         }
                     }
                 }
