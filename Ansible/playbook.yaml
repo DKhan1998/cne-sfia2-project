@@ -1,11 +1,4 @@
 ---
-- hosts: all
-  vars:
-    app_path: {
-      "resource/variables/tf_ansible_vars.yml",
-      "resource/variables/tf_db_vars.yml"
-    }
-
 - name: Install Jenkins on Jenkins vm
   hosts: jenkins
   gather_facts: false
@@ -20,4 +13,11 @@
   hosts: testvm
   tasks:
     - name: Install docker and docker-compose
-      script : Dockerfile.sh
+      script: Dockerfile.sh
+
+- name: COnfigure k8s on deploy vm
+  hosts: K8S_CLuster
+  become: true
+  tasks:
+    - import_role:
+        name: k8s-cluster

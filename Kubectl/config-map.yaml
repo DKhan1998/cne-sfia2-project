@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: nginx-config
+data:
+  default.conf: |
+    server {
+        listen 80;
+        root /app;
+        index index.html;
+        include /etc/nginx/mime.types;
+        location / {
+            proxy_pass http://frontend:5000;
+        }
+    }

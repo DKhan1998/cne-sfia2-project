@@ -1,0 +1,41 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: backend
+spec:
+  selector:
+    app: backend
+  ports:
+    - protocol: TCP
+      port: 5001
+      targetPort: 5001
+  type: ClusterIP
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend
+  labels:
+    app: backend
+spec:
+  selector:
+    matchLabels:
+      app: backend
+  template:
+    metadata:
+      labels:
+        app: backend
+    spec:
+      containers:
+        - name: backend
+          image: dkhan20/backend:latest
+          ports:
+            - containerPort: 5001
+          readinessProbe:
+            httpGet:
+              path: /backend
+              port: 5001
+      volumes:
+        - name: backend-config
+          configMap:
+            name: backend-config

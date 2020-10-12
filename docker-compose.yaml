@@ -23,7 +23,12 @@ services:
     ports:
       - target: 5001
         published: 5001
-
+    depends_on:
+      - database
+  database:
+    container_name: db
+    build: ./database
+    image: dkhan20/database
   nginx:
     image: nginx
     ports:
