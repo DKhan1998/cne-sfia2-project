@@ -9,8 +9,8 @@ pipeline{
             steps{
                 script{
                     if (env.rollback == 'false'){
+                        load "./.envvars/tf_ansible.groovy"
                         sh '''
-                            load ".envvars/tf_ansible.groovy"
 
                             # Export variables to build project
                             export MYSQL_ROOT_PASSWORD=$env.MYSQL_ROOT_PASSWORD
@@ -34,10 +34,10 @@ pipeline{
             steps{
                 script{
                     if (env.rollback == 'false'){
-                            readProperties(file: "Ansible/roles/common/vars/tf_ansible_vars.yml").each {key, value -> env[key] = value }
+                            load "./.envvars/tf_ansible.groovy"
                             sh '''
                                 # SSH into testing-vm
-                                ssh -tt -o "StrictHostKeyChecking=no" -i $env.tf_EC2_private_key $env.tf_jenkins_user << EOF
+                                ssh -tt -o "StrictHostKeyChecking=no" -i $env.EC2_private_key $env.jenkins_user << EOF
 
                                 docker-compose pull nginx
 
@@ -62,18 +62,19 @@ pipeline{
                                        string(credentialsId: 'SECRET_KEY', variable: 'key')]){
                             sh '''
                                 # SSH into testing-vm
-                                ssh -tt -o "StrictHostKeyChecking=no" -i $AWS_EU_Key $ << EOF
+                                ssh -tt -o "StrictHostKeyChecking=no" -i $env.EC2_private_key $env.testvm_user << EOF
 
                                 cd cne-sfia2-project
 
-                                export MYSQL_ROOT_PASSWORD=$pwd
-                                export DB_PASSWORD=$pwd
-                                export TEST_DATABASE_URI=$tUri
-                                export DATABASE_URI=$uri
-                                export SECRET_KEY=$key
+                                # Export variables to build project
+                                export MYSQL_ROOT_PASSWORD=$env.MYSQL_ROOT_PASSWORD
+                                export DB_PASSWORD=$env.DB_PASSWORD
+                                export TEST_DATABASE_URI=$env.TEST_DATABASE_URI
+                                export DATABASE_URI=$env.DATABASE_URI
+                                export SECRET_KEY=$env.SECRET_KEY
 
-                                sudo -E TEST_DATABASE_URI=$tUri SECRET_KEY=$pwd docker exec front pytest  --cov-report term --cov=application
-                                sudo -E TEST_DATABASE_URI=$tUri SECRET_KEY=$pwd docker exec back pytest  --cov-report term --cov=application
+                                sudo -E TEST_DATABASE_URI=$env.TEST_DATABASE_URI SECRET_KEY=$env.SECRET_KEY docker exec front pytest  --cov-report term --cov=application
+                                sudo -E TEST_DATABASE_URI=$env.TEST_DATABASE_URI SECRET_KEY=$env.SECRET_KEY docker exec back pytest  --cov-report term --cov=application
 
                                 exit
 
