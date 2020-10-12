@@ -43,6 +43,7 @@ pipeline{
             steps{
                 script{
                     if (env.rollback == 'false'){
+                        sh 'docker logout'
                           docker.withRegistry('https://registry.hub.docker.com', 'docker-hub-credentials'){
                             load "Ansible/.envvars/tf_db.groovy"
                             load "Ansible/.envvars/tf_ansible.groovy"

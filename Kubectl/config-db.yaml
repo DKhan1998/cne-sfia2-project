@@ -2,14 +2,14 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: mysql
+  name: database
   labels:
-    app: mysql
+    app: database
 spec:
   selector:
-    app: mysql
+    app: database
   ports:
-    - name: mysql
+    - name: database
       port: 3306
   type: ClusterIP
 ---
@@ -17,32 +17,32 @@ spec:
 apiVersion: apps/v1 # for versions before 1.9.0 use apps/v1beta2
 kind: Deployment
 metadata:
-  name: mysql
+  name: database
 spec:
   selector:
     matchLabels:
-      app: mysql
+      app: database
   strategy:
     type: Recreate
   template:
     metadata:
       labels:
-        app: mysql
+        app: database
     spec:
       containers:
-        - image: mysql:5.7
-          name: mysql
+        - image: dkhan20/database:latest
+          name: database
           env:
-            # Use secret in real usage
             - name: MYSQL_ROOT_PASSWORD
-              value: password
+              value: ${MYSQL_ROOT_PASSWORD}
+            - name: DB_PASSWORD
+              value: ${DB_PASSWORD}
+            - name: TEST_DATABASE_URI
+              value: ${TEST_DATABASE_URI}
+            - name: DATABASE_URI
+              value: ${DATABASE_URI}
+            - name: SECRET_KEY
+              value: ${SECRET_KEY}
           ports:
             - containerPort: 3306
-              name: mysql
-          volumeMounts:
-            - name: mysql-persistent-storage
-              mountPath: /var/lib/mysql
-      volumes:
-        - name: mysql-persistent-storage
-          persistentVolumeClaim:
-            claimName: mysql-pv-claim
+              name: database
