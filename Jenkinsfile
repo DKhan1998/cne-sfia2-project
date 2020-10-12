@@ -58,7 +58,7 @@ pipeline{
 
                             docker tag dkhan20/frontend:latest dkhan20/frontend:latest
                             docker tag dkhan20/backend:latest dkhan20/backend:latest
-                            docker tag dkhan20/nginx:latest dkhan20/nginx:latest
+                            docker tag dkhan20/cne-sfia2-project_nginx_1 dkhan20/nginx:latest
                             docker tag dkhan20/database:latest dkhan20/batabase:latest
 
                             sudo -E MYSQL_ROOT_PASSWORD=${env.MYSQL_ROOT_PASSWORD} DB_PASSWORD=${env.DB_PASSWORD} DATABASE_URI=${env.DATABASE_URI} TEST_DATABASE_URI=${env.TEST_DATABASE_URI} SECRET_KEY=${env.SECRET_KEY} docker-compose push
