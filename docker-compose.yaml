@@ -44,7 +44,7 @@ services:
 
   nginx:
     container_name: nginx
-    image: nginx
+    image: library/nginx:latest
     ports:
       - target: 80
         published: 80
