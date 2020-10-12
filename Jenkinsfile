@@ -58,7 +58,7 @@ pipeline{
                                 # build project using docker-compose and environment variables
                                 sudo -E MYSQL_ROOT_PASSWORD=${env.MYSQL_ROOT_PASSWORD} DB_PASSWORD=${env.DB_PASSWORD} TEST_DATABASE_URI=${env.TEST_DATABASE_URI} SECRET_KEY=${env.SECRET_KEY} docker-compose build
 
-                                docker-compose push
+                                sudo docker-compose push
 
                              """
                          }
@@ -78,7 +78,7 @@ pipeline{
                                     # SSH into testing-vm
                                     ssh -tt -o "StrictHostKeyChecking=no" -i '$key' ${env.jenkins_user} << EOF
 
-                                    docker-compose pull && docker-compose up -d
+                                    sudo docker-compose pull && docker-compose up -d
 
                                     exit
 
