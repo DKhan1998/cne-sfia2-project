@@ -22,8 +22,7 @@ pipeline{
                                 export SECRET_KEY=${env.SECRET_KEY}
 
                                 # build project using docker-compose and environment variables
-                                sudo -E MYSQL_ROOT_PASSWORD=${env.MYSQL_ROOT_PASSWORD} DB_PASSWORD=${env.DB_PASSWORD} TEST_DATABASE_URI=${env.TEST_DATABASE_URI} SECRET_KEY=${env.SECRET_KEY} docker-compose build
-                                docker-compose push
+                                sudo -E MYSQL_ROOT_PASSWORD=${env.MYSQL_ROOT_PASSWORD} DB_PASSWORD=${env.DB_PASSWORD} TEST_DATABASE_URI=${env.TEST_DATABASE_URI} SECRET_KEY=${env.SECRET_KEY} docker-compose up -d --build
 
                                 >> EOF
                              """
@@ -32,30 +31,30 @@ pipeline{
                 }
             }
         }
-        stage('SSH Connect | Run | Test application in testing-vm'){
-            steps{
-                script{
-                    if (env.rollback == 'false'){
-                        withCredentials([file(credentialsId: 'Private-key', variable: 'key')]){
-                            load "./Ansible/.envvars/tf_ansible.groovy"
-                            load "./Ansible/.envvars/tf_db.groovy"
-                            sh """
-                                # SSH into testing-vm
-                                ssh -tt -o "StrictHostKeyChecking=no" -i '$key' ${env.jenkins_user} << EOF
-
-                                sudo docker-compose pull
-
-                                sudo docker-compose run -d
-
-                                exit
-
-                                >> EOF
-                             """
-                        }
-                    }
-                }
-            }
-        }
+//         stage('SSH Connect | Run | Test application in testing-vm'){
+//             steps{
+//                 script{
+//                     if (env.rollback == 'false'){
+//                         withCredentials([file(credentialsId: 'Private-key', variable: 'key')]){
+//                             load "./Ansible/.envvars/tf_ansible.groovy"
+//                             load "./Ansible/.envvars/tf_db.groovy"
+//                             sh """
+//                                 # SSH into testing-vm
+//                                 ssh -tt -o "StrictHostKeyChecking=no" -i '$key' ${env.jenkins_user} << EOF
+//
+//                                 sudo docker-compose pull
+//
+//                                 sudo docker-compose run -d
+//
+//                                 exit
+//
+//                                 >> EOF
+//                              """
+//                         }
+//                     }
+//                 }
+//             }
+//         }
         stage('Testing'){
             steps{
                 script{
