@@ -32,12 +32,12 @@ pipeline{
             steps{
                 script{
                     if (env.rollback == 'false'){
-                        withCredentials([file(credentialsId: 'Private-key', variable: 'private-key')]){
+                        withCredentials([file(credentialsId: 'Private-key', variable: 'key')]){
                             load "./Ansible/.envvars/tf_ansible.groovy"
                             load "./Ansible/.envvars/tf_db.groovy"
                             sh """
                                 # SSH into testing-vm
-                                ssh -tt -o "StrictHostKeyChecking=no" -i $private-key ${env.jenkins_user} << EOF
+                                ssh -tt -o "StrictHostKeyChecking=no" -i '$key' ${env.jenkins_user} << EOF
 
                                 sudo docker-compose pull nginx
 
