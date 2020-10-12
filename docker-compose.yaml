@@ -23,9 +23,9 @@ services:
     ports:
       - target: 5001
         published: 5001
+
   nginx:
-    container_name: nginx
-    image: dkhan20/nginx:latest
+    image: nginx
     ports:
       - target: 80
         published: 80
