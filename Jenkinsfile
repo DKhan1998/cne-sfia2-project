@@ -9,7 +9,7 @@ pipeline{
             steps{
                 script{
                     if (env.rollback == 'false'){
-                        docker.withRegistry('https://registry.hub.docker.com', 'docker-hub-credentials'){
+//                         docker.withRegistry('https://registry.hub.docker.com', 'docker-hub-credentials'){
                             load "Ansible/.envvars/tf_db.groovy"
                             sh """
                                 ssh -tt -o "StrictHostKeyChecking=no" -i '$key' ${env.jenkins_user} << EOF
@@ -26,7 +26,7 @@ pipeline{
 
                                 >> EOF
                              """
-                        }
+//                         }
                     }
                 }
             }
