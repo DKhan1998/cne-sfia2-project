@@ -1,57 +1,35 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: database
+  name: mysql
 spec:
   selector:
-    app: database
+    app: mysql
   ports:
     - protocol: TCP
       port: 3306
-      targetPort: 3306
   type: ClusterIP
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: database
+  name: mysql
   labels:
-    app: database
+    app: mysql
 spec:
   selector:
     matchLabels:
-      app: database
+      app: mysql
   template:
     metadata:
       labels:
-        app: database
+        app: mysql
     spec:
       containers:
-        - name: database
+        - name: mysql
           image: dkhan20/database
           env:
-            # Use secret in real usage
             - name: MYSQL_ROOT_PASSWORD
-              value: password
-              # Use secret in real usage
-            - name: DB_PASSWORD
-              value: password
-            # Use secret in real usage
-            - name: TEST_DATABASE_URI
-              value: mysql+pymysql://admin:password@testdb.cgytirb7uezx.eu-west-2.rds.amazonaws.com:3306/testdb
-            # Use secret in real usage
-            - name: DATABASE_URI
-              value: mysql+pymysql://admin:password@deploydb.cgytirb7uezx.eu-west-2.rds.amazonaws.com:3306/users
-            - name: SECRET_KEY
-              value: password
-
+              value: ${MYSQL_ROOT_PASSWORD}
           ports:
             - containerPort: 3306
-          readinessProbe:
-            httpGet:
-              path: /database
-              port: 3306
-      volumes:
-        - name: database-config
-          configMap:
-            name: database-config

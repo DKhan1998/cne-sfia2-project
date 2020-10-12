@@ -79,7 +79,7 @@ pipeline{
                             export DATABASE_URI=${env.DATABASE_URI}
                             export SECRET_KEY=${env.SECRET_KEY}
 
-                            sudo -E TEST_DATABASE_URI=${env.TEST_DATABASE_URI} SECRET_KEY=${env.SECRET_KEY} docker exec front pytest  --cov-report term --cov=application
+                            sudo -E TEST_DATABASE_URI=${env.DATABASE_URI} SECRET_KEY=${env.SECRET_KEY} docker exec front pytest  --cov-report term --cov=application
                             sudo -E TEST_DATABASE_URI=${env.TEST_DATABASE_URI} SECRET_KEY=${env.SECRET_KEY} docker exec back pytest  --cov-report term --cov=application
 
                             exit

@@ -9,7 +9,7 @@ spec:
     - protocol: TCP
       port: 5000
       targetPort: 5000
-  type: ClusterIP
+  type: LoadBalancer
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -31,11 +31,3 @@ spec:
           image: dkhan20/frontend:latest
           ports:
             - containerPort: 5000
-          readinessProbe:
-            httpGet:
-              path: frontend
-              port: 5000
-      volumes:
-        - name: frontend-config
-          configMap:
-            name: frontend-config
