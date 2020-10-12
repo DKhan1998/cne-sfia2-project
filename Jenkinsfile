@@ -13,7 +13,7 @@ pipeline{
                             withCredentials([file(credentialsId: 'ansible_vars', variable: 'ansible_vars'),
                                            file(credentialsId: 'ansible_vars', variable: 'db_vars')]){
                                 sh '''
-                                    load "$JENKINS_HOME/.envvars/tf_ansible.groovy"
+                                    load ".envvars/tf_ansible.groovy"
 
                                     # Export variables to build project
                                     export MYSQL_ROOT_PASSWORD=$env.MYSQL_ROOT_PASSWORD
