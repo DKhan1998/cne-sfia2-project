@@ -32,20 +32,20 @@ pipeline{
             steps{
                 script{
                     if (env.rollback == 'false'){
-                            load "./Ansible/.envvars/tf_ansible.groovy"
-                            load "./Ansible/.envvars/tf_db.groovy"
-                            sh '''
-                                # SSH into testing-vm
-                                ssh -tt -o "StrictHostKeyChecking=no" -i ${env.EC2_private_key} ${env.jenkins_user} << EOF
+                        load "./Ansible/.envvars/tf_ansible.groovy"
+                        load "./Ansible/.envvars/tf_db.groovy"
+                        sh """
+                            # SSH into testing-vm
+                            ssh -tt -o "StrictHostKeyChecking=no" -i ${env.EC2_private_key} ${env.jenkins_user} << EOF
 
-                                docker-compose pull nginx
+                            sudo docker-compose pull nginx
 
-                                docker-compose run -d
+                            sudo docker-compose run -d
 
-                                exit
+                            exit
 
-                                >> EOF
-                             '''
+                            >> EOF
+                         """
                     }
                 }
             }
