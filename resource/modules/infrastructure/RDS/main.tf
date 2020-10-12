@@ -45,8 +45,8 @@ resource "aws_db_instance" "RDS_deploy" {
 resource "local_file" "tf_db_vars" {
   content  = <<-DOC
     // project variables to pass for databse
-    env.TEST_DATABASE_URI="mysql+pymysql://${aws_db_instance.RDS_test.username}:${aws_db_instance.RDS_test.password}@${aws_db_instance.RDS_test.endpoint}:3306/testdb"
-    env.DATABASE_URI="mysql+pymysql://${aws_db_instance.RDS_deploy.username}:${aws_db_instance.RDS_deploy.password}@${aws_db_instance.RDS_deploy.endpoint}:3306/users"
+    env.TEST_DATABASE_URI="mysql+pymysql://${aws_db_instance.RDS_test.username}:${aws_db_instance.RDS_test.password}@${aws_db_instance.RDS_test.endpoint}/testdb"
+    env.DATABASE_URI="mysql+pymysql://${aws_db_instance.RDS_deploy.username}:${aws_db_instance.RDS_deploy.password}@${aws_db_instance.RDS_deploy.endpoint}/users"
     env.SECRET_KEY="${aws_db_instance.RDS_test.password}"
     env.MYSQL_ROOT_PASSWORD="${aws_db_instance.RDS_test.password}"
     env.DB_PASSWORD="${aws_db_instance.RDS_test.password}"
