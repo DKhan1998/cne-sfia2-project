@@ -9,10 +9,11 @@ pipeline{
             steps{
                 script{
                     if (env.rollback == 'false'){
-//                         docker.withRegistry('https://registry.hub.docker.com', 'docker-hub-credentials'){
+                          withCredentials([file(credentialsId: 'Private-key', variable: 'key')]){
                             load "Ansible/.envvars/tf_db.groovy"
+                            load "Ansible/.envvars/tf_ansible.groovy"
                             sh """
-                                ssh -tt -o "StrictHostKeyChecking=no" -i "AWS_EU_Key" ${env.jenkins_user} << EOF
+                                ssh -tt -o "StrictHostKeyChecking=no" -i '${key}' ${env.jenkins_user} << EOF
 
                                 # Export variables to build project
                                 export MYSQL_ROOT_PASSWORD=${env.MYSQL_ROOT_PASSWORD}
@@ -26,7 +27,7 @@ pipeline{
 
                                 >> EOF
                              """
-//                         }
+                         }
                     }
                 }
             }
