@@ -3,7 +3,7 @@ services:
   frontend:
     container_name: front
     build: ./frontend
-    image: dkhan20/frontend:latest
+    image: dkhan20/frontend
     ports:
       - target: 5000
         published: 5000
@@ -13,7 +13,7 @@ services:
   backend:
     container_name: back
     build: ./backend
-    image: dkhan20/backend:latest
+    image: dkhan20/backend
     environment:
       - MYSQL_DATABASE=database
       - TEST_DATABASE_URI=${TEST_DATABASE_URI}
@@ -23,11 +23,9 @@ services:
     ports:
       - target: 5001
         published: 5001
-
-
   nginx:
     container_name: nginx
-    image: dkhan20/nginx:latest
+    image: dkhan20/nginx
     ports:
       - target: 80
         published: 80
