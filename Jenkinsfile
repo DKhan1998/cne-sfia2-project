@@ -13,7 +13,7 @@ pipeline{
                             load "Ansible/.envvars/tf_db.groovy"
                             load "Ansible/.envvars/tf_ansible.groovy"
                             sh """
-                                ssh -tt -o "StrictHostKeyChecking=no" -i '${key}' ${env.jenkins_user} << EOF
+                                ssh -tt -o "StrictHostKeyChecking=no" -i '${key}' ${env.testvm_user} << EOF
 
                                 git clone https://github.com/DKhan1998/cne-sfia2-project.git
                                 cd cne-sfia2-project
@@ -71,8 +71,6 @@ pipeline{
                         sh """
                             # SSH into testing-vm
                             ssh -tt -o "StrictHostKeyChecking=no" -i '${key}' ${env.testvm_user} << EOF
-
-                            cd cne-sfia2-project
 
                             # Export variables to build project
                             export MYSQL_ROOT_PASSWORD=${env.MYSQL_ROOT_PASSWORD}
