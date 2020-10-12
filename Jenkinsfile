@@ -4,7 +4,7 @@ pipeline{
         app_version = 'v3'
         rollback = 'false'
     }
-//     stages{
+    stages{
 //         stage('Build Containers'){
 //             steps{
 //                 script{
@@ -129,26 +129,26 @@ pipeline{
                 script{
                     if (env.rollback == 'false'){
                         withCredentials([file(credentialsId: 'Private-key', variable: 'key')]){
-                        load "./Ansible/.envvars/tf_ansible.groovy"
-                        load "./Ansible/.envvars/tf_db.groovy"
-                        sh """
-                            # SSH into testing-vm
-                            ssh -tt -o "StrictHostKeyChecking=no" -i '${key}' ${env.testvm_user} << EOF
+                            load "./Ansible/.envvars/tf_ansible.groovy"
+                            load "./Ansible/.envvars/tf_db.groovy"
+                            sh """
+                                # SSH into testing-vm
+                                ssh -tt -o "StrictHostKeyChecking=no" -i '${key}' ${env.testvm_user} << EOF
 
-                            # Export variables to build project
-                            export MYSQL_ROOT_PASSWORD=${env.MYSQL_ROOT_PASSWORD}
-                            export DB_PASSWORD=${env.DB_PASSWORD}
-                            export TEST_DATABASE_URI=${env.TEST_DATABASE_URI}
-                            export DATABASE_URI=${env.DATABASE_URI}
-                            export SECRET_KEY=${env.SECRET_KEY}
+                                # Export variables to build project
+                                export MYSQL_ROOT_PASSWORD=${env.MYSQL_ROOT_PASSWORD}
+                                export DB_PASSWORD=${env.DB_PASSWORD}
+                                export TEST_DATABASE_URI=${env.TEST_DATABASE_URI}
+                                export DATABASE_URI=${env.DATABASE_URI}
+                                export SECRET_KEY=${env.SECRET_KEY}
 
-                            sudo -E TEST_DATABASE_URI=${env.DATABASE_URI} SECRET_KEY=${env.SECRET_KEY} docker exec front pytest  --cov-report term --cov=application
-                            sudo -E TEST_DATABASE_URI=${env.TEST_DATABASE_URI} SECRET_KEY=${env.SECRET_KEY} docker exec back pytest  --cov-report term --cov=application
+                                sudo -E TEST_DATABASE_URI=${env.DATABASE_URI} SECRET_KEY=${env.SECRET_KEY} docker exec front pytest  --cov-report term --cov=application
+                                sudo -E TEST_DATABASE_URI=${env.TEST_DATABASE_URI} SECRET_KEY=${env.SECRET_KEY} docker exec back pytest  --cov-report term --cov=application
 
-                            exit
+                                exit
 
-                            >> EOF
-                        """
+                                >> EOF
+                            """
                         }
                     }
                 }
