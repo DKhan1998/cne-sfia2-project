@@ -12,7 +12,7 @@ pipeline{
 //                         docker.withRegistry('https://registry.hub.docker.com', 'docker-hub-credentials'){
                             load "Ansible/.envvars/tf_db.groovy"
                             sh """
-                                ssh -tt -o "StrictHostKeyChecking=no" -i '$key' ${env.jenkins_user} << EOF
+                                ssh -tt -o "StrictHostKeyChecking=no" -i ${key} ${env.jenkins_user} << EOF
 
                                 # Export variables to build project
                                 export MYSQL_ROOT_PASSWORD=${env.MYSQL_ROOT_PASSWORD}
