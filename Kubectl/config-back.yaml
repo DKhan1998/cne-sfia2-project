@@ -28,17 +28,23 @@ spec:
     spec:
       containers:
         - name: backend
-          image: dkhan20/backend:latest
+          image: palinhesosilva/backend:latest
           env:
+            # Use secret in real usage
             - name: MYSQL_ROOT_PASSWORD
-              value: ${MYSQL_ROOT_PASSWORD}
+              value: password
+              # Use secret in real usage
             - name: DB_PASSWORD
-              value: ${DB_PASSWORD}
+              value: password
+            # Use secret in real usage
             - name: TEST_DATABASE_URI
-              value: ${TEST_DATABASE_URI}
+              value: mysql+pymysql://admin:password@testdb.cgytirb7uezx.eu-west-2.rds.amazonaws.com:3306/testdb
+            # Use secret in real usage
             - name: DATABASE_URI
-              value: ${DATABASE_URI}
+              value: mysql+pymysql://admin:password@deploydb.cgytirb7uezx.eu-west-2.rds.amazonaws.com:3306/users
             - name: SECRET_KEY
-              value: ${SECRET_KEY}
+              value: mine
+            - name: MYSQL_DATABASE
+              value: mysql
           ports:
             - containerPort: 5001

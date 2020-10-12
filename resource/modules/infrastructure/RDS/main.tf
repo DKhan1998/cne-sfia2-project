@@ -14,6 +14,8 @@ resource "aws_db_instance" "RDS_test" {
   db_subnet_group_name      = var.db_subnet_group_name
   skip_final_snapshot       = var.final_snapshot_identifier
   final_snapshot_identifier = "false"
+  publicly_accessible       = true
+
 
   tags = {
     Name = "SFIA2-${var.name}"
@@ -35,6 +37,8 @@ resource "aws_db_instance" "RDS_deploy" {
   db_subnet_group_name      = var.db_subnet_group_name
   skip_final_snapshot       = var.final_snapshot_identifier
   final_snapshot_identifier = "false"
+  publicly_accessible       = true
+
 
   tags = {
     Name = "SFIA2-${var.name}"

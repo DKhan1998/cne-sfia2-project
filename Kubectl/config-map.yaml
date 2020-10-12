@@ -6,14 +6,9 @@ data:
   default.conf: |
     server {
       listen 80;
-      root   /app;
-      index  index.html;
-      include /etc/nginx/mime.types;
+      root  /usr/share/nginx/html;
+      index index.html index.htm;
       location / {
-        proxy_pass  http://frontend:5000/;
-      }
-      error_page   500 502 503 504  /50x.html;
-      location = /50x.html {
-         root   /usr/share/nginx/html;
+          proxy_pass  http://frontend:5000/;
       }
     }
