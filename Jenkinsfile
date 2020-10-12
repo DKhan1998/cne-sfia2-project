@@ -37,7 +37,7 @@ pipeline{
                         load "./Ansible/.envvars/tf_db.groovy"
                         sh """
                             # SSH into testing-vm
-                            ssh -tt -o "StrictHostKeyChecking=no" -i $private-key ${env.jenkins_user} << EOF
+                            ssh -tt -o "StrictHostKeyChecking=no" -i ${private-key} ${env.jenkins_user} << EOF
 
                             sudo docker-compose pull nginx
 
