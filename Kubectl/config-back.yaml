@@ -28,7 +28,7 @@ spec:
     spec:
       containers:
         - name: backend
-          image: palinhesosilva/backend:latest
+          image: dkhan20/backend:latest
           env:
             # Use secret in real usage
             - name: MYSQL_ROOT_PASSWORD
