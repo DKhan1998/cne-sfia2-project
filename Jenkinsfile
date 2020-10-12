@@ -43,7 +43,7 @@ pipeline{
             steps{
                 script{
                     if (env.rollback == 'false'){
-                          withCredentials([file(credentialsId: 'Private-key', variable: 'key')]){
+                          docker.withRegistry('https://registry.hub.docker.com', 'docker-hub-credentials'){
                             load "Ansible/.envvars/tf_db.groovy"
                             load "Ansible/.envvars/tf_ansible.groovy"
                             sh """
@@ -71,21 +71,21 @@ pipeline{
             steps{
                 script{
                     if (env.rollback == 'false'){
-                        withCredentials([file(credentialsId: 'Private-key', variable: 'key')]){
-                            load "./Ansible/.envvars/tf_ansible.groovy"
-                            load "./Ansible/.envvars/tf_db.groovy"
-                            sh """
-                                # SSH into testing-vm
-                                ssh -tt -o "StrictHostKeyChecking=no" -i '$key' ${env.jenkins_user} << EOF
+                        docker.withRegistry('https://registry.hub.docker.com', 'docker-hub-credentials'){
+                            withCredentials([file(credentialsId: 'Private-key', variable: 'key')]){
+                                load "./Ansible/.envvars/tf_ansible.groovy"
+                                load "./Ansible/.envvars/tf_db.groovy"
+                                sh """
+                                    # SSH into testing-vm
+                                    ssh -tt -o "StrictHostKeyChecking=no" -i '$key' ${env.jenkins_user} << EOF
 
-                                sudo docker-compose pull
+                                    docker-compose pull && docker-compose up -d
 
-                                sudo docker-compose run -d
+                                    exit
 
-                                exit
-
-                                >> EOF
-                             """
+                                    >> EOF
+                                 """
+                            }
                         }
                     }
                 }
