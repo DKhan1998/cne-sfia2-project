@@ -44,7 +44,7 @@ pipeline{
                 script{
                     if (env.rollback == 'false'){
                         sh 'docker logout'
-                          docker.withRegistry('https://registry.hub.docker.com', 'docker-hub-credentials'){
+                        docker.withRegistry('https://registry.hub.docker.com', 'docker-hub-credentials'){
                             load "Ansible/.envvars/tf_db.groovy"
                             load "Ansible/.envvars/tf_ansible.groovy"
                             sh """
@@ -59,10 +59,17 @@ pipeline{
                                 # build project using docker-compose and environment variables
                                 sudo -E MYSQL_ROOT_PASSWORD=${env.MYSQL_ROOT_PASSWORD} DB_PASSWORD=${env.DB_PASSWORD} DATABASE_URI=${env.DATABASE_URI} TEST_DATABASE_URI=${env.TEST_DATABASE_URI} SECRET_KEY=${env.SECRET_KEY} docker-compose build
 
-                                sudo -E MYSQL_ROOT_PASSWORD=${env.MYSQL_ROOT_PASSWORD} DB_PASSWORD=${env.DB_PASSWORD} DATABASE_URI=${env.DATABASE_URI} TEST_DATABASE_URI=${env.TEST_DATABASE_URI} SECRET_KEY=${env.SECRET_KEY} docker-compose push
+                                docker logout
 
                              """
-                         }
+                            docker.withRegistry('https://registry.hub.docker.com', 'docker-hub-credentials'){
+                                 sh """
+
+                                    sudo -E MYSQL_ROOT_PASSWORD=${env.MYSQL_ROOT_PASSWORD} DB_PASSWORD=${env.DB_PASSWORD} DATABASE_URI=${env.DATABASE_URI} TEST_DATABASE_URI=${env.TEST_DATABASE_URI} SECRET_KEY=${env.SECRET_KEY} docker-compose push
+
+                                 """
+                            }
+                        }
                     }
                 }
             }
