@@ -33,6 +33,12 @@ spec:
             - name: MYSQL_ROOT_PASSWORD
               value: ${MYSQL_ROOT_PASSWORD}
             - name: DB_PASSWORD
-              value: ${DB_PASSWOR}
+              value: ${DB_PASSWORD}
+            - name: TEST_DATABASE_URI
+              value: ${TEST_DATABASE_URI}
+            - name: DATABASE_URI
+              value: ${DATABASE_URI}
+            - name: SECRET_KEY
+              value: ${SECRET_KEY}
           ports:
             - containerPort: 5001
