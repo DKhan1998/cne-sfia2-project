@@ -9,7 +9,7 @@ pipeline{
             steps{
                 script{
                     if (env.rollback == 'false'){
-                        load "./Ansible/.envvars/tf_ansible.groovy"
+                        load ".envvars/tf_ansible.groovy"
                         sh """
 
                             # Export variables to build project
