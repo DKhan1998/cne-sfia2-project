@@ -9,24 +9,25 @@ pipeline{
             steps{
                 script{
                     if (env.rollback == 'false'){
+                        withDockerRegistry(credentialsId: "docker-hub-credentials", url: "https://hub.docker.com/"){
+                            load "Ansible/.envvars/tf_db.groovy"
+                            sh """
 
-                        load "Ansible/.envvars/tf_db.groovy"
-                        sh """
+                                # Export variables to build project
+                                export MYSQL_ROOT_PASSWORD=${env.MYSQL_ROOT_PASSWORD}
+                                export DB_PASSWORD=${env.DB_PASSWORD}
+                                export TEST_DATABASE_URI=${env.TEST_DATABASE_URI}
+                                export DATABASE_URI=${env.DATABASE_URI}
+                                export SECRET_KEY=${env.SECRET_KEY}
 
-                            # Export variables to build project
-                            export MYSQL_ROOT_PASSWORD=${env.MYSQL_ROOT_PASSWORD}
-                            export DB_PASSWORD=${env.DB_PASSWORD}
-                            export TEST_DATABASE_URI=${env.TEST_DATABASE_URI}
-                            export DATABASE_URI=${env.DATABASE_URI}
-                            export SECRET_KEY=${env.SECRET_KEY}
+                                # build project using docker-compose and environment variables
+                                docker-compose pull
+                                sudo -E MYSQL_ROOT_PASSWORD=${env.MYSQL_ROOT_PASSWORD} DB_PASSWORD=${env.DB_PASSWORD} TEST_DATABASE_URI=${env.TEST_DATABASE_URI} SECRET_KEY=${env.SECRET_KEY} docker-compose build
+                                docker-compose push
 
-                            # build project using docker-compose and environment variables
-                            docker-compose pull
-                            sudo -E MYSQL_ROOT_PASSWORD=${env.MYSQL_ROOT_PASSWORD} DB_PASSWORD=${env.DB_PASSWORD} TEST_DATABASE_URI=${env.TEST_DATABASE_URI} SECRET_KEY=${env.SECRET_KEY} docker-compose build
-                            docker-compose push
-
-                            >> EOF
-                         """
+                                >> EOF
+                             """
+                        }
                     }
                 }
             }
