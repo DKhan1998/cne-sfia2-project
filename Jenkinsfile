@@ -22,8 +22,6 @@ pipeline{
                             # build project using docker-compose and environment variables
                             sudo -E MYSQL_ROOT_PASSWORD=${env.MYSQL_ROOT_PASSWORD} DB_PASSWORD=${env.DB_PASSWORD} TEST_DATABASE_URI=${env.TEST_DATABASE_URI} SECRET_KEY=${env.SECRET_KEY} docker-compose build
 
-                            exit
-
                             >> EOF
                          """
                     }
@@ -58,7 +56,7 @@ pipeline{
                     if (env.rollback == 'false'){
                         load "./Ansible/.envvars/tf_ansible.groovy"
                         load "./Ansible/.envvars/tf_db.groovy"
-                        sh '''
+                        sh """
                             # SSH into testing-vm
                             ssh -tt -o "StrictHostKeyChecking=no" -i ${env.EC2_private_key} ${env.testvm_user} << EOF
 
@@ -77,7 +75,7 @@ pipeline{
                             exit
 
                             >> EOF
-                        '''
+                        """
                     }
                 }
             }
