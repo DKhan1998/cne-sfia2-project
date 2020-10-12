@@ -1,4 +1,11 @@
 ---
+- hosts: all
+  vars:
+    app_path: {
+      "resource/variables/tf_ansible_vars.yml",
+      "resource/variables/tf_db_vars.yml"
+    }
+
 - name: Install Jenkins on Jenkins vm
   hosts: jenkins
   gather_facts: false
@@ -6,11 +13,11 @@
   tasks:
     - import_role:
         name: jenkins
+    - name: Install docker and docker-compose
+      script: Dockerfile.sh
 
-- name: Install Docker in Test vm
+- name: Configure Test vm
   hosts: testvm
   tasks:
-    - import_role:
-        name: docker
-    -import_role:
-        name: docker-compose
+    - name: Install docker and docker-compose
+      script : Dockerfile.sh

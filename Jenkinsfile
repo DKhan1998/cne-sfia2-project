@@ -5,38 +5,50 @@ pipeline{
         rollback = 'false'
     }
     stages{
-        stage('SSH Connect | Run | Test application in testing-vm'){
+        stage('Build Containers'){
             steps{
                 script{
+                      readProperties(file: "Ansible/roles/common/vars/tf_ansible_vars.yml").each {key, value -> env[key] = value }
                     if (env.rollback == 'false'){
-                        withCredentials([file(credentialsId: 'Authentication', variable: 'AWS_EU_Key'),
-                                       string(credentialsId: 'DATABASE_URI', variable: 'uri'),
-                                       string(credentialsId: 'TEST_DATABASE_URI', variable: 'tUri'),
-                                       string(credentialsId: 'MYSQL_ROOT_PASSWORD', variable: 'pwd'),
-                                       string(credentialsId: 'SECRET_KEY', variable: 'key')]){
+                        withCredentials([file(credentialsId: 'ansible_vars', variable: 'ansible_vars'),
+                                       file(credentialsId: 'ansible_vars', variable: 'db_vars')]){
                             sh '''
-
-                                # SSH into testing-vm
-                                ssh -tt -o "StrictHostKeyChecking=no" -i $AWS_EU_Key ubuntu@ec2-35-177-75-30.eu-west-2.compute.amazonaws.com << EOF
-
-                                rm -rf cne-sfia2-project
-                                git clone https://github.com/DKhan1998/cne-sfia2-project.git
-                                cd cne-sfia2-project
-
-                                export MYSQL_ROOT_PASSWORD=$pwd
-                                export DB_PASSWORD=$pwd
-                                export TEST_DATABASE_URI=$tUri
-                                export DATABASE_URI=$uri
-                                export SECRET_KEY=$key
+                                # Export variables to build project
+                                export MYSQL_ROOT_PASSWORD=$ansible_vars.tf_MYSQL_ROOT_PASSWORD
+                                export DB_PASSWORD=$ansible_vars.tf_DB_PASSWORD
+                                export TEST_DATABASE_URI=$ansible_vars.tf_TEST_DATABASE_URI
+                                export DATABASE_URI=$ansible_vars.tf_DATABASE_URI
+                                export SECRET_KEY=$ansible_vars.tf_SECRET_KEY
 
                                 # build project using docker-compose and environment variables
-                                sudo -E MYSQL_ROOT_PASSWORD=$pwd DB_PASSWORD=$pwd TEST_DATABASE_URI=$tUri SECRET_KEY=$key docker-compose up -d --build
+                                sudo -E MYSQL_ROOT_PASSWORD=$ansible_vars.tf_MYSQL_ROOT_PASSWORD $ansible_vars.tf_DB_PASSWORD TEST_DATABASE_URI=$ansible_vars.tf_TEST_DATABASE_URI SECRET_KEY=$ansible_vars.tf_SECRET_KEY docker-compose build
 
                                 exit
 
                                 >> EOF
                              '''
                         }
+                    }
+                }
+            }
+        }
+        stage('SSH Connect | Run | Test application in testing-vm'){
+            steps{
+                script{
+                    if (env.rollback == 'false'){
+                            readProperties(file: "Ansible/roles/common/vars/tf_ansible_vars.yml").each {key, value -> env[key] = value }
+                            sh '''
+                                # SSH into testing-vm
+                                ssh -tt -o "StrictHostKeyChecking=no" -i $env.tf_EC2_private_key $env.tf_jenkins_user << EOF
+
+                                docker-compose pull nginx
+
+                                docker-compose run -d
+
+                                exit
+
+                                >> EOF
+                             '''
                     }
                 }
             }

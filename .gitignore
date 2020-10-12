@@ -6,7 +6,8 @@
 /.idea/misc.xml
 /.idea/modules.xml
 /.idea/vcs.xml
-
-/Ansible
-/resource
+*.pem
+resource/.terraform
+Ansible
+resource
 
