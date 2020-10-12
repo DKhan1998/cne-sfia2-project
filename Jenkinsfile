@@ -8,7 +8,7 @@ pipeline{
         stage('Build Containers'){
             steps{
                 script{
-                      readProperties(file: "Ansible/roles/common/vars/tf_ansible_vars.yml").each {key, value -> env[key] = value }
+//                       readProperties(file: "Ansible/roles/common/vars/tf_ansible_vars.yml").each {key, value -> env[key] = value }
                     if (env.rollback == 'false'){
                         withCredentials([file(credentialsId: 'ansible_vars', variable: 'ansible_vars'),
                                        file(credentialsId: 'ansible_vars', variable: 'db_vars')]){
