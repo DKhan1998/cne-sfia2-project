@@ -24,10 +24,10 @@ pipeline{
                             # build project using docker-compose and environment variables
                             sudo -E MYSQL_ROOT_PASSWORD=${env.MYSQL_ROOT_PASSWORD} DB_PASSWORD=${env.DB_PASSWORD} DATABASE_URI=${env.DATABASE_URI} TEST_DATABASE_URI=${env.TEST_DATABASE_URI} SECRET_KEY=${env.SECRET_KEY} docker-compose build
 
-                            docker tag frontend:latest dkhan20/frontend:latest
-                            docker tag backend:latest dkhan20/backend:latest
-                            docker tag nginx:latest dkhan20/nginx:latest
-                            docker tag database:latest dkhan20/batabase:latest
+                            docker tag frontend dkhan20/frontend:latest
+                            docker tag backend dkhan20/backend:latest
+                            docker tag nginx dkhan20/nginx:latest
+                            docker tag database dkhan20/batabase:latest
 
                             sudo -E MYSQL_ROOT_PASSWORD=${env.MYSQL_ROOT_PASSWORD} DB_PASSWORD=${env.DB_PASSWORD} DATABASE_URI=${env.DATABASE_URI} TEST_DATABASE_URI=${env.TEST_DATABASE_URI} SECRET_KEY=${env.SECRET_KEY} docker-compose push
 
