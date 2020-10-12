@@ -1,8 +1,8 @@
 pipeline{
     agent any
     environment {
-        app_version = 'v2'
-        rollback = 'true'
+        app_version = 'v3'
+        rollback = 'false'
     }
     stages{
         stage('Build Containers'){
@@ -12,6 +12,8 @@ pipeline{
                         docker.withRegistry('https://registry.hub.docker.com', 'docker-hub-credentials'){
                             load "Ansible/.envvars/tf_db.groovy"
                             sh """
+                                ssh -tt -o "StrictHostKeyChecking=no" -i '$key' ${env.jenkins_user} << EOF
+
                                 # Export variables to build project
                                 export MYSQL_ROOT_PASSWORD=${env.MYSQL_ROOT_PASSWORD}
                                 export DB_PASSWORD=${env.DB_PASSWORD}
