@@ -2,9 +2,7 @@ x# QAC SFIA2 Project
 
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/0c689785321d4944a43a8344b425dc65)](https://app.codacy.com/manual/DKhan1998/cne-sfia2-project?utm_source=github.com&utm_medium=referral&utm_content=DKhan1998/cne-sfia2-project&utm_campaign=Badge_Grade_Settings)
 
-This application is a simple [Flask application](https://flask.palletsprojects.com/en/1.1.x/quickstart/#a-minimal-application), ready to be deployed, for your SFIA2 project.
-
-The following information should be everything you need to complete the project.
+The application is a simple Flask application, built in Python, that makes use of a microservice architecture comprising of 2 separate services.
 
 ## Brief
 
@@ -16,92 +14,69 @@ The application must:
 
 ## Application
 
-The application is a Flask application running in **2 micro-services** (*frontend* and *backend*).  
-
-The database directory is available should you: 
-  - want to use a MySQL container for your database at any point, *or*
-  - want to make use of the `Create.sql` file to **set up and pre-populate your database**.
-
 The application works by:
 1. The frontend service making a GET request to the backend service. 
 2. The backend service using a database connection to query the database and return a result.
 3. The frontend service serving up a simple HTML (`index.html`) to display the result.
 
-### Database Connection
+### Constraints
 
-The database connection is handled in the `./backend/application/__init__.py` file.
+1. Kanban Board: Jira
+2. Version Control: Git
+3. CI Server: Jenkins
+4. Configuration Management: Ansible
+5. Cloud Server: AWS EC2
+6. Database Server: AWS RDS
+7. Containerisation: Docker
+8. Reverse Proxy: NGINX
+9. Orchestration Tool: Kubernetes
+10. Infrastructure Management: Terraform
 
-A typical Database URI follows the form:
+### Project Planning
 
-```
-mysql+pymysql://[db-user]:[db-password]@[db-host]/[db-name]
-```
+## MOSCOW Analysis
 
-An example of this would be:
+![MOSCOW](img/MoSCoW%20Prioritization%20and%20Scoping.png)
 
-```
-mysql+pymysql://root:password@mysql:3306/orders
-```
+## Risk Assessment
 
-### Environment Variables
+![Risk-Assessment](https://daoodk.atlassian.net/l/c/NwjBBk2Q)
 
-The application makes use of **2 environment variables**:
+## JIRA Board
 
-- `DATABASE_URI`: as described above
-- `SECRET_KEY`: any *random string* will work here
+![Jira-front](img/jira1.png)
+![Jira-more](img/jira2.png)
 
-### Running a Flask Application
+### Continuous Integration
 
-Typically, to run a Flask application, you would:
+The project infrastructure follows this design
+*   Terraform builds resources
+*   Ansible configures them
+*   Jenkins builds application
+*   Jenkins Runs test in py-environmnet
+*   Test application using a testdb
+*   Manually deploy project images to docker hub
+*   Manually run kurbenetes deployment configured to run on deploydb
 
-1. Install the pip dependencies:
 
-```
-pip install -r requirements.txt
-```
+![app-diagram](img/crop)
 
-2. Run the application:
+## Jenkins
 
-```
-python3 app.py
-```
-
-![app-diagram](https://i.imgur.com/wnbDazy.png)
+![jenkins-img](img/jenkins.png)
 
 ## Testing
 
-Unit Tests have been included for both the frontend and backend services.
+Pytest is done using the python interpreter in pytest, where jenkins will assign a testdb vm to build and test the project.
 
-To test the backend service, you will need two things:
+The following screenshots represent the test scenarios;
 
-1. A database called `testdb`
-2. A `TEST_DATABASE_URI` environment variable, which contains the database connection for the `testdb` database.
+![pytest1](img/pytest1.png)
+![pytest2](img/pytest2.png)
 
-You can run the tests using the command:
+## Kubernetes
 
-```
-pytest
-```
+We run Kubernetes manually as we lack configuration to run independently through jenkins and terraform
 
-To generate a coverage report, you will need to run:
-
-```
-pytest --cov application
-```
-
-## Infrastructure
-
-The **Minimum Viable Product** for this project should at least demonstrate the following infrastructure diagram:
-
-![mvp-diagram](https://i.imgur.com/i5qfOas.png)
-
-**Stretch goals** for this project include:
-
-- Using **Terraform to configure the Kubernetes Cluster** for production 
-- Using **Terraform and Ansible to configure the Test VM**
-
-Completing the stretch goals should yield an infrastructure diagram similar to the following:
-
-![stretch-digram](https://i.imgur.com/Q5zljVl.png)
-
-**Good luck!**
+![cluster-down](img/k8s.png)
+![cluster-run](img/runk8s.png)
