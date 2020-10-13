@@ -1,7 +1,7 @@
 # Create a resource
 resource "aws_db_instance" "RDS_test" {
   allocated_storage         = var.allocated_storage
-  identifier                = "testdb"
+  identifier                = "test-db"
   storage_type              = var.storage_type
   engine                    = var.engine
   engine_version            = var.engine_version
@@ -24,7 +24,7 @@ resource "aws_db_instance" "RDS_test" {
 
 resource "aws_db_instance" "RDS_deploy" {
   allocated_storage         = var.allocated_storage
-  identifier                = "deploydb"
+  identifier                = "deploy-db"
   storage_type              = var.storage_type
   engine                    = var.engine
   engine_version            = var.engine_version
