@@ -13,7 +13,7 @@ resource "aws_instance" "EC2" {
   }
 }
 
-### The Elastic IP for the Bastion
+### The Elastic IP for the EC2
 resource "aws_eip" "EIP" {
   vpc                       = true
   instance                  = aws_instance.EC2[0].id
