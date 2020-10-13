@@ -15,6 +15,7 @@ pipeline{
                             sh """
                                ssh -tt -o "StrictHostKeyChecking=no" -i '${key}' ${env.testvm_user} << EOF
 
+                                rmdir cne-sfia2-project
                                 git clone https://github.com/DKhan1998/cne-sfia2-project.git
                                 cd cne-sfia2-project
 
