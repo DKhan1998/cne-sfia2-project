@@ -6,7 +6,7 @@ data:
   default.conf: |
     server {
       listen 80;
-      index index.html;
+      index frontend/application/templates/index.html;
       location / {
           proxy_pass  http://frontend:5000/;
       }
