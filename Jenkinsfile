@@ -130,5 +130,16 @@ pipeline{
                 }
             }
         }
+        stage("Deploy to cluster"){
+            steps{
+                script{
+                    if (env.rollback == 'false'){
+                        sh """
+
+                        """
+                    }
+                }
+            }
+        }
     }
 }
