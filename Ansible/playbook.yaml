@@ -15,7 +15,7 @@
     - name: Install docker and docker-compose
       script: Dockerfile.sh
 
-- name: COnfigure k8s on deploy vm
+- name: Configure k8s on deploy vm
   hosts: K8S_CLuster
   become: true
   tasks:
